@@ -4,4 +4,4 @@ writable/logs
 writable/session
 public/asset/photo/
 .DS_Store
-.env
+
