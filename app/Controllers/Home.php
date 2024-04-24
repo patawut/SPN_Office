@@ -82,4 +82,12 @@ class Home extends Controller
     private function checkLogin(){ 
         return $this->session->has('username')?true:false;
     }
+
+    public function userlist(){
+        if($this->checkLogin()){
+            return view('page/userlist');
+        }else{
+            return view('page/login');
+        } 
+    }
 }

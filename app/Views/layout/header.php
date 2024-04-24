@@ -25,6 +25,8 @@ if($user==null || $fullname==null || $typeUser==null){
 	<link href="<?=site_url('assets/plugins/simplebar/css/simplebar.css')?>" rel="stylesheet" />
 	<link href="<?=site_url('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css')?>" rel="stylesheet" />
 	<link href="<?=site_url('assets/plugins/metismenu/css/metisMenu.min.css')?>" rel="stylesheet"/>
+	<link href="<?=site_url('assets/plugins/datatable/css/dataTables.bootstrap5.min.css')?>" rel="stylesheet" />
+	
 	<!-- loader-->
 	<link href="<?=site_url('assets/css/pace.min.css')?>" rel="stylesheet"/>
 	<script src="<?=site_url('assets/js/pace.min.js')?>"></script>
@@ -43,6 +45,9 @@ if($user==null || $fullname==null || $typeUser==null){
 	<script src="<?=site_url('assets/js/jquery.min.js')?>"></script>
 	<script src="<?=site_url('assets/plugins/simplebar/js/simplebar.min.js')?>"></script>
 	<script src="<?=site_url('assets/plugins/metismenu/js/metisMenu.min.js')?>"></script>
+	<script src="<?=site_url('assets/plugins/datatable/js/jquery.dataTables.min.js') ?>"></script>
+	<script src="<?=site_url('assets/plugins/datatable/js/dataTables.bootstrap5.min.js')?>"></script>
+
 	<script src="<?=site_url('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js')?>"></script>
 	<script src="<?=site_url('assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js')?>"></script>
     <script src="<?=site_url('assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js')?>"></script> 

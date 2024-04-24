@@ -44,6 +44,8 @@ $routes->group('api/v1', function($routes) {
 });
  ;
 
+ $routes->get('/userlist', 'Home::userlist');
+
 
 $routes->get('/logout', 'Home::logout');
 $routes->match(['get','post'],'/page/(:any)', 'GetCompoent::component/$1');
