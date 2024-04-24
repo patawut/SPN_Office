@@ -54,7 +54,7 @@ $query = $db->query("SELECT * FROM `user` WHERE `status` <> '99' ORDER BY `usern
                         <td class="text-nowarp">Password</td>
                         <td class="text-nowarp"><?=esc($row['fullname'])?></td>
                         <td class="text-nowarp"><?=esc($utype['type'])?></td>
-                        <td class="text-nowrap <?=$row['status'] =="1"?"bg-success":"bg-danger"?>">
+                        <td class="text-nowrap">
                             <select class="form-select" id="status" name="status" TypeID="<?=esc($row['username'])?>">
                                 <option value="0" <?=$row['status'] == "0"?"selected='selected'":""?>>ปิดใช้งาน</option>
                                 <option value="1" <?=$row['status'] == "1"?"selected='selected'":""?>>เปิดใช้งาน
@@ -66,7 +66,7 @@ $query = $db->query("SELECT * FROM `user` WHERE `status` <> '99' ORDER BY `usern
                                 data-bs-toggle="dropdown" aria-expanded="false"><i class="lni lni-cog"></i></button>
                             <ul class="dropdown-menu">
                                 <li> <a class="dropdown-item text-warning ControlEdit" tID="<?=esc($row['username'])?>"
-                                        href="javascript:;"><i class="lni lni-pencil-alt"></i>&nbsp;แก้ไขข้อมูล</a>
+                                        href="javascript:;"><i class="fadeIn animated bx bx-edit"></i>&nbsp;แก้ไขข้อมูล</a>
                                 </li>
                                 <li> <a class="dropdown-item text-danger ControlDelete" tID="<?=esc($row['username'])?>"
                                         st="<?=$row['status']?>" href="javascript:;"><i

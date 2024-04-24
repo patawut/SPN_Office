@@ -90,4 +90,6 @@ class Home extends Controller
             return view('page/login');
         } 
     }
+
+  
 }
