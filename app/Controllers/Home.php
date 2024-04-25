@@ -91,5 +91,26 @@ class Home extends Controller
         } 
     }
 
-  
+    public function producttype(){
+        if($this->checkLogin()){
+            return view('page/producttype');
+        }else{
+            return view('page/login');
+        } 
+    }
+    public function banklist(){
+        if($this->checkLogin()){
+            return view('page/banklist');
+        }else{
+            return view('page/login');
+        } 
+    }
+    public function bankaccount(){
+        if($this->checkLogin()){
+            return view('page/bankaccount');
+        }else{
+            return view('page/login');
+        } 
+    }
+    
 }

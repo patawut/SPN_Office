@@ -3,12 +3,12 @@ $session = session();
 $id = isset($_POST['id']) ? $_POST['id'] : '';
 $st = isset($_POST['st']) ? $_POST['st'] : '';
 $even = isset($_POST['even']) ? $_POST['even'] : '';
-$uid= isset($_POST['uid']) ? $_POST['uid'] : '';
-$username=isset($_POST['username']) ? $_POST['username'] : '';
-$password=isset($_POST['password']) ? $_POST['password'] : '';
-$fullname=isset($_POST['fullname']) ? $_POST['fullname'] : '';
-$telephone=isset($_POST['telephone']) ? $_POST['telephone'] : '';
-$usertype=isset($_POST['usertype']) ? $_POST['usertype'] : '';
+$tid= isset($_POST['tid']) ? $_POST['tid'] : '';
+$accout_name=isset($_POST['accout_name']) ? $_POST['accout_name'] : '';
+$accout_number=isset($_POST['accout_number']) ? $_POST['accout_number'] : '';
+$photo=isset($_POST['photo']) ? $_POST['photo'] : '';
+$photourl=isset($_POST['photourl']) ? $_POST['photourl'] : '';
+$bankcode=isset($_POST['bankcode']) ? $_POST['bankcode'] : '';
 $value=isset($_POST['value']) ? $_POST['value'] : '';
 $status=isset($_POST['status']) ? $_POST['status'] : '';
 $response = [];
@@ -37,13 +37,11 @@ if ($even == "add"){
         $response = [
             'even' => 'add', 
         ];
-            $pass = password_hash($password,PASSWORD_DEFAULT);
-            $query1 = $db->query("SELECT * FROM `user` WHERE `username` = ? ",[$username]);
-                if($usertype != '99'){
-                    $sql2="INSERT INTO `user` (`username`, `password`,`fullname`,`type`,`status`) VALUES (?, ?, ?, ?,?)";
-                    $query3 =$db->query($sql2,[$username,$pass,$fullname,$usertype,$status]);
-        
-                    if($query3){
+            
+                if($bankcode != '99'){
+                    $sql="INSERT INTO `bank_account` (`bank_id`, `bankCode`,`accout_name`,`accout_number`,`accout_logo`,`status`) VALUES (NULL, ?, ?, ?, ?, ?)";
+                    $query =$db->query($sql,[$bankcode,$accout_name,$accout_number,$photourl,$status]);
+                    if($query){
                         $response['status']=1;
                         $response['msg']='บันทึกข้อมูลสำเร็จ';
                     }else{
@@ -52,7 +50,7 @@ if ($even == "add"){
                     } 
                 }else{
                     $response['status']=0;
-                    $response['msg']='กรุณาเลือกระดับการเข้าถึง';
+                    $response['msg']='กรุณาเลือกชื่อธนาคาร';
                 }
         echo json_encode($response, JSON_UNESCAPED_UNICODE);
  }

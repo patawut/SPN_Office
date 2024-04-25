@@ -52,6 +52,10 @@ if($user==null || $fullname==null || $typeUser==null){
 	<script src="<?=site_url('assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js')?>"></script>
     <script src="<?=site_url('assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js')?>"></script> 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	
+
 	<!--app JS-->
 	<script src="<?=site_url('assets/js/app.js')?>"></script>
 	<title><?=$WEB_NAME?> <?=$WEB_TOPIC?></title>

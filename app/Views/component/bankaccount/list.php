@@ -1,37 +1,35 @@
 <?php 
+$fc = new \App\Helpers\fcBank($db);
 $return=array();
-$fc = new \App\Helpers\fcUser($db);
-
-$query = $db->query("SELECT * FROM `user` WHERE `status` <> '99' ORDER BY `username` DESC ");
+$query = $db->query("SELECT * FROM `bank_account`  WHERE `status` <> '99'  ORDER BY `bank_id` DESC ");
 ?>
 
 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-    <div class="breadcrumb-title pe-3"><i class='bx bxs-user'></i> ข้อมูลผู้ใช้งาน</div>
+    <div class="breadcrumb-title pe-3"><i class="lni lni-cog"></i>  ตั้งบัญชีรับเงิน</div>
     <div class="ps-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="<?=site_url('./')?>"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">จัดการข้อมูลผู้ใช้งาน</li>
+                <li class="breadcrumb-item active" aria-current="page">จัดการข้อมูลบัญชีรับเงิน</li>
             </ol>
         </nav>
     </div>
 </div>
 <!--end breadcrumb-->
 <hr />
-
 <div class="card border-top border-0 border-4 border-info">
     <div class="card-body p-5">
         <div class="row no-gutters">
             <div class="col-md-8 order-md-1 mb-2 ">
-                <h5 class="text-md-start text-center mb-0"><i class="bx bxs-user me-1 font-22 "></i> จัดการข้อมูลผู้ใช้งาน</h5>
+                <h5 class="text-md-start text-center mb-0"><i class="lni lni-cog"></i> จัดการข้อมูลบัญชีรับเงิน</h5>
             </div>
             <div class="col-md-4 order-md-2">
                 <div class="text-md-end text-center">
                     <button type="button" class="btn btn-primary align-items-center" id="add">
-                        <i class="fadeIn animated bx bx-user-plus"></i>
+                        <i class="fadeIn animated bx bx-plus"></i>
                         &nbsp;
-                        เพิ่มข้อมูลผู้ใช้งาน
+                        เพิ่มข้อมูลบัญชีรับเงิน
                     </button>
                 </div>
             </div>
@@ -42,10 +40,9 @@ $query = $db->query("SELECT * FROM `user` WHERE `status` <> '99' ORDER BY `usern
                 <thead>
                     <tr class="text-nowrap bg-warning">
                         <th class="text-center">ลำดับ</th>
-                        <th class="text-nowrap">Username</th>
-                        <th class="text-nowrap">Password</th>
-                        <th class="text-nowrap">ชื่อเต็ม</th>
-                        <th class="text-nowrap">ระดับ</th>
+                        <th class="text-nowrap">ชื่อธนาคาร</th>
+                        <th class="text-nowrap">ชื่อบัญชี</th>
+                        <th class="text-nowrap">เลขบัญชี</th>
                         <th class="text-center">สถานะ</th>
                         <th class="text-center"><i class="fas fa-cog"></i></th>
                     </tr>
@@ -55,18 +52,15 @@ $query = $db->query("SELECT * FROM `user` WHERE `status` <> '99' ORDER BY `usern
                     $i=0;
                     foreach($query->getResult('array') as $row){ 
                         $i++;
-                        $user_data = $row['username'];
-                        $utype = $fc->userTypeID($user_data);
+                        $btype = $fc->bankTypeID($row['bankCode']);
                     ?>
                     <tr>
                         <td class="text-center align-middle"><?=$i?></td>
-                        <td class="text-nowarp align-middle"><?=esc($row['username'])?></td>
-                        <td class="text-nowarp align-middle">Password</td>
-                        <td class="text-nowarp align-middle"><?=esc($row['fullname'])?></td>
-                        <td class="text-nowarp align-middle"><?=esc($utype['type'])?></td>
+                        <td class="text-nowarp align-middle"><?=esc($btype['bankNameTh'])?></td>
+                        <td class="text-nowarp align-middle"><?=esc($row['accout_name'])?></td>
+                        <td class="text-nowarp align-middle"><?=esc($row['accout_number'])?></td>
                         <td class="text-nowrap">
-                            <select class="form-select <?=$row['status'] =="1"?"bg-success":"bg-danger"?> text-white"
-                                id="status" name="status" TypeID="<?=esc($row['username'])?>">
+                            <select class="form-select <?=$row['status'] =="1"?"bg-success":"bg-danger"?> text-white" id="status" name="status" TypeID="<?=esc($row['bank_id'])?>">
                                 <option value="0" <?=$row['status'] == "0"?"selected='selected'":""?>>ปิดใช้งาน</option>
                                 <option value="1" <?=$row['status'] == "1"?"selected='selected'":""?>>เปิดใช้งาน
                                 </option>
@@ -76,11 +70,16 @@ $query = $db->query("SELECT * FROM `user` WHERE `status` <> '99' ORDER BY `usern
                             <button class="btn btn-outline-secondary dropdown-toggle bg-info" type="button"
                                 data-bs-toggle="dropdown" aria-expanded="false"><i class="lni lni-cog"></i></button>
                             <ul class="dropdown-menu">
-                                <li> <a class="dropdown-item text-warning ControlEdit" tID="<?=esc($row['username'])?>"
-                                        href="javascript:;"><i
-                                            class="fadeIn animated bx bx-edit"></i>&nbsp;แก้ไขข้อมูล</a>
+                                <li> <a class="dropdown-item text-dark ControlDesc" tID="<?=esc($row['bank_id'])?>"
+                                        st="<?=$row['status']?>" href="javascript:;"><i
+                                            class="fadeIn animated bx bx-detail"></i>&nbsp;
+                                        รายละเอียด</a>
                                 </li>
-                                <li> <a class="dropdown-item text-danger ControlDelete" tID="<?=esc($row['username'])?>"
+                                <hr />
+                                <li> <a class="dropdown-item text-warning ControlEdit" tID="<?=esc($row['bank_id'])?>"
+                                        href="javascript:;"><i class="fadeIn animated bx bx-edit"></i>&nbsp;แก้ไขข้อมูล</a>
+                                </li>
+                                <li> <a class="dropdown-item text-danger ControlDesc" tID="<?=esc($row['bank_id'])?>"
                                         st="<?=$row['status']?>" href="javascript:;"><i
                                             class="fadeIn animated bx bx-eraser"></i>&nbsp;
                                         ลบข้อมูล</a></a>
@@ -99,13 +98,11 @@ $query = $db->query("SELECT * FROM `user` WHERE `status` <> '99' ORDER BY `usern
 </div>
 
 
-
-
 <script>
 $(document).ready(function() {
     $('#add').click(function(e) {
         e.preventDefault();
-        $.post("./component/userlist/form", (data) => {
+        $.post("./component/bankaccount/form", (data) => {
             $('#contentData').html(data);
         }, "html");
     });
@@ -125,7 +122,7 @@ $(document).ready(function() {
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                $.post("./component/userlist/process", {
+                $.post("./component/bankaccount/process", {
                         even: 'del',
                         id: id,
                         st: st
@@ -134,12 +131,13 @@ $(document).ready(function() {
                         //console.log(data) test data เมื่อเปี่ยนเป็น html
                         if (data.status == 1) {
                             Swal.fire({
+
                                 icon: 'success',
                                 title: 'ลบเรียบร้อยแล้ว',
                                 showConfirmButton: false,
                                 timer: 1500
                             }).then(function() {
-                                $.post("./component/userlist/list", (data) => {
+                                $.post("./component/bankaccount/list", (data) => {
                                     $('#contentData').html(data);
                                 }, "html");
                             });
@@ -161,7 +159,19 @@ $(document).ready(function() {
         e.preventDefault();
         let id = $(this).attr('tID');
         var even = 'edit';
-        $.post("./component/userlist/form", {
+        $.post("./component/bankaccount/form", {
+            even: even,
+            id: id
+        }, (data) => {
+            $('#contentData').html(data);
+        }, "html");
+    });
+
+    $('.ControlDesc').click(function(e) {
+        e.preventDefault();
+        let id = $(this).attr('tID');
+        var even = 'desc';
+        $.post("./component/bankaccount/description", {
             even: even,
             id: id
         }, (data) => {
@@ -173,7 +183,7 @@ $(document).ready(function() {
         e.preventDefault();
         let id = $(this).attr('TypeID');
         let value = $(this).val();
-        $.post("./component/userlist/process", {
+        $.post("./component/bankaccount/process", {
                 id: id,
                 value: value,
                 even: 'editstatus'
@@ -187,7 +197,7 @@ $(document).ready(function() {
                         showConfirmButton: false,
                         timer: 1500
                     }).then(function() {
-                        $.post("./component/userlist/list", (data) => {
+                        $.post("./component/bankaccount/list", (data) => {
                             $('#contentData').html(data);
                         }, "html");
                     });
@@ -201,7 +211,6 @@ $(document).ready(function() {
             }, "json"
         );
     });
-
     $('#dataTable').DataTable();
 });
 </script>
