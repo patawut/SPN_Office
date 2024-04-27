@@ -4,11 +4,11 @@ $id = isset($_POST['id']) ? $_POST['id'] : '';
 $st = isset($_POST['st']) ? $_POST['st'] : '';
 $even = isset($_POST['even']) ? $_POST['even'] : '';
 $tid= isset($_POST['tid']) ? $_POST['tid'] : '';
-$accout_name=isset($_POST['accout_name']) ? $_POST['accout_name'] : '';
-$accout_number=isset($_POST['accout_number']) ? $_POST['accout_number'] : '';
+$topic=isset($_POST['topic']) ? $_POST['topic'] : '';
+$note=isset($_POST['note']) ? $_POST['note'] : '';
+$linkurl=isset($_POST['linkurl']) ? $_POST['linkurl'] : '';
 $photo=isset($_POST['photo']) ? $_POST['photo'] : '';
 $photourl=isset($_POST['photourl']) ? $_POST['photourl'] : '';
-$bankcode=isset($_POST['bankcode']) ? $_POST['bankcode'] : '';
 $value=isset($_POST['value']) ? $_POST['value'] : '';
 $status=isset($_POST['status']) ? $_POST['status'] : '';
 $response = [];
@@ -32,31 +32,25 @@ if(!$session->has('username')){
     exit;
 }
 
-if ($even == "add"){
+if($even == "add"){
     //print_r($_POST);
     $response = [
     'even' => 'add', 
     ];
-            
-    if($bankcode != '99'){
-        $sql="INSERT INTO `bank_account` (`bank_id`, `bankCode`,`accout_name`,`accout_number`,`accout_logo`,`status`) VALUES (NULL, ?, ?, ?, ?, ?)";
-        $query =$db->query($sql,[$bankcode,$accout_name,$accout_number,$photourl,$status]);
-        if($query){
-            $response['status']=1;
-            $response['msg']='บันทึกข้อมูลสำเร็จ';
-        }else{
-            $response['status']=0;
-            $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
-        } 
+    $sql="INSERT INTO `article` (`article_id`, `topic`,`photo`,`note`,`linkurl`,`status`) VALUES (NULL, ?, ?, ?, ?, ?)";
+    $query =$db->query($sql,[$topic,$photourl,$note,$linkurl,$status]);
+    if($query){
+        $response['status']=1;
+        $response['msg']='บันทึกข้อมูลสำเร็จ';
     }else{
         $response['status']=0;
-        $response['msg']='กรุณาเลือกชื่อธนาคาร';
-    }
+        $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+    } 
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
- }
+}
 
- if ($even == "del") { 
-    $query = $db->query("UPDATE  `bank_account` SET  `status` = 99  WHERE `bank_id` = ?", [$id]);
+if ($even == "del") { 
+    $query = $db->query("UPDATE  `article` SET  `status` = 99  WHERE `article_id` = ?", [$id]);
     if ($query) {
         $response['status']=1;
         $response['msg']='บันทึกข้อมูลสำเร็จ';
@@ -74,7 +68,7 @@ if($even=="editstatus"){
         'value' => $value,
     ];
     if($value == '1'){
-        $query = $db->query("UPDATE `bank_account` SET `status` = ?  WHERE `bank_id` = ?", [$value,$id]);
+        $query = $db->query("UPDATE `article` SET `status` = ?  WHERE `article_id` = ?", [$value,$id]);
         if ($query) {
             $response['status']=1;
             $response['msg']='บันทึกข้อมูลสำเร็จ';
@@ -83,7 +77,7 @@ if($even=="editstatus"){
             $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
         }
     }else{
-        $query = $db->query("UPDATE `bank_account` SET `status` = ?  WHERE `bank_id` = ?", [$value,$id]);
+        $query = $db->query("UPDATE `article` SET `status` = ?  WHERE `article_id` = ?", [$value,$id]);
         if ($query) {
             $response['status']=1;
             $response['msg']='บันทึกข้อมูลสำเร็จ';
@@ -100,19 +94,14 @@ if($even=="edit" && $tid!=""){
         'even' => 'edit',
         'tid' => $tid,
         'st' => $status, 
-    ];
-    if($bankcode != '99'){
-        $query =$db->query("UPDATE `bank_account` SET `bankcode`= ? ,`accout_name`= ? ,`accout_number`= ? ,`accout_logo`= ?   ,`status` = ?  WHERE `bank_id` = ?",[$bankcode,$accout_name,$accout_number,$photourl,$status,$tid]);
-        if($query){
-            $response['status']=1;
-            $response['msg']='บันทึกข้อมูลสำเร็จ';
-        }else{
-            $response['status']=0;
-            $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
-        }
+    ]; 
+    $query =$db->query("UPDATE `article` SET `topic`= ? ,`note`= ?  ,`photo`= ?  ,`linkurl`= ?   ,`status` = ?  WHERE `article_id` = ?",[$topic,$note,$photourl,$linkurl,$status,$tid]);
+    if($query){
+        $response['status']=1;
+        $response['msg']='บันทึกข้อมูลสำเร็จ';
     }else{
         $response['status']=0;
-        $response['msg']='กรุณาเลือกชื่อธนาคาร';
+        $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
     }
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }

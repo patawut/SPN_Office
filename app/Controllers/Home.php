@@ -112,5 +112,19 @@ class Home extends Controller
             return view('page/login');
         } 
     }
+    public function article(){
+        if($this->checkLogin()){
+            return view('page/article');
+        }else{
+            return view('page/login');
+        } 
+    }
+    public function news(){
+        if($this->checkLogin()){
+            return view('page/news');
+        }else{
+            return view('page/login');
+        } 
+    }
     
 }

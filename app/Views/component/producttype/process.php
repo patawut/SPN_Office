@@ -32,15 +32,20 @@ if ($even == "add"){
         $response = [
             'even' => 'add', 
         ];
-        $sql="INSERT INTO `product_type` (`type_id`, `type_name`, `note`, `level`, `status`) VALUES (NULL, ?, ?, ?, ?)";
-        $query =$db->query($sql,[$type_name,$note,$level,$status]);
-        if($query){
-            $response['status']=1;
-            $response['msg']='บันทึกข้อมูลสำเร็จ';
+        if($level != '99'){
+                $sql="INSERT INTO `product_type` (`type_id`, `type_name`, `note`, `level`, `status`) VALUES (NULL, ?, ?, ?, ?)";
+            $query =$db->query($sql,[$type_name,$note,$level,$status]);
+            if($query){
+                $response['status']=1;
+                $response['msg']='บันทึกข้อมูลสำเร็จ';
+            }else{
+                $response['status']=0;
+                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+            } 
         }else{
             $response['status']=0;
-            $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
-        } 
+            $response['msg']='กรุณาเลือกระดับ';
+        }
         echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 if ($even == "del") { 
@@ -62,14 +67,19 @@ if($even=="edit" && $tid!=""){
             'st' => $status, 
             'typename' => $type_name,
         ];
-        $query = $db->query("UPDATE `product_type` SET `type_name`= ? , `note`= ?, `level`= ? ,`status` = ?  WHERE `type_id` = ?", [ $type_name,$note,$level,$status,$tid]);
-        if ($query) {
-            $response['status']=1;
-            $response['msg']='บันทึกข้อมูลสำเร็จ';
-        } else {
-            $response['status']=0;
-            $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
-        }
+        if($level != '99'){
+            $query = $db->query("UPDATE `product_type` SET `type_name`= ? , `note`= ?, `level`= ? ,`status` = ?  WHERE `type_id` = ?", [ $type_name,$note,$level,$status,$tid]);
+            if ($query) {
+                $response['status']=1;
+                $response['msg']='บันทึกข้อมูลสำเร็จ';
+            } else {
+                $response['status']=0;
+                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+            }
+    }else{
+        $response['status']=0;
+        $response['msg']='กรุณาเลือกระดับ';
+    }
         echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 

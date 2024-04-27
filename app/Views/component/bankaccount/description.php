@@ -98,13 +98,17 @@
                 </div>
                 <br>
             </div>
-
             <div class="col-12">
                 <label class="form-label">สถานะ</label>
-                <select class="form-control <?=$status =="1"?"bg-success":"bg-danger"?> text-white" id="status" name="status" disabled>
-                    <option value="1" <?=$status=="1"?"selected":""?>>เปิดใช้งาน</option>
-                    <option value="0" <?=$status=="0"?"selected":""?>>ปิดใช้งาน</option>
-                </select>
+                <div class="input-group">
+                    <button class="btn btn-outline-secondary" type="button"><i class='fadeIn animated bx bx-show'></i>
+                    </button>
+                    <select class="form-select single-select" id="status" name="status"
+                        aria-label="Example select with button addon" disabled>
+                        <option value="1" <?=$status=="1"?"selected":""?>>เปิดใช้งาน</option>
+                        <option value="0" <?=$status=="0"?"selected":""?>>ปิดใช้งาน</option>
+                    </select>
+                </div>
             </div>
         </form>
     </div>

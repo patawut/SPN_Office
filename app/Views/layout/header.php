@@ -52,8 +52,8 @@ if($user==null || $fullname==null || $typeUser==null){
 	<script src="<?=site_url('assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js')?>"></script>
     <script src="<?=site_url('assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js')?>"></script> 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 	
 
 	<!--app JS-->
@@ -126,13 +126,13 @@ if($user==null || $fullname==null || $typeUser==null){
 				</li>
 				<li class="menu-label">Contents</li> 
 				<li>
-					<a href="faq.html">
+					<a href="<?=site_url('./article')?>">
 						<div class="parent-icon"><i class="bx bx-help-circle"></i> </div>
 						<div class="menu-title">บทความ</div>
 					</a>
 				</li>
 				<li>
-					<a href="pricing-table.html">
+					<a href="<?=site_url('./news')?>">
 						<div class="parent-icon"><i class="bx bx-diamond"></i> </div>
 						<div class="menu-title">ข่าวสาร</div>
 					</a>

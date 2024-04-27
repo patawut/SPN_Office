@@ -45,6 +45,8 @@ $routes->get('/userlist', 'Home::userlist');
 $routes->get('/producttype', 'Home::producttype');
 $routes->get('/banklist', 'Home::banklist');
 $routes->get('/bankaccount', 'Home::bankaccount');
+$routes->get('/article', 'Home::article');
+$routes->get('/news', 'Home::news');
 
 
 $routes->get('/logout', 'Home::logout');
