@@ -7,7 +7,7 @@
 		<footer class="page-footer">
 			<p class="mb-0">Copyright © 2024. SP NETWORK CO., LTD  All right reserved.</p>
 		</footer>
-	</div>
+</div>
 	<!--end wrapper-->
 	 
 	<!-- Bootstrap JS -->

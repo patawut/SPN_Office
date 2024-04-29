@@ -35,15 +35,19 @@ $routes->get('/login', 'Home::getLogin');
 $routes->post('/login', 'Home::postLogin');
 $routes->get('/logout', 'Home::logout');
 
- 
-
 $routes->group('api/v1', function($routes) {
     $routes->post('login', 'ApiController::getLogin');
     $routes->post('profile', 'ApiController::getProfile');
     $routes->post('password', 'ApiController::password');
 });
- ;
 
+$routes->get('/userlist', 'Home::userlist');
+$routes->get('/producttype', 'Home::producttype');
+$routes->get('/banklist', 'Home::banklist');
+$routes->get('/bankaccount', 'Home::bankaccount');
+$routes->get('/article', 'Home::article');
+$routes->get('/news', 'Home::news');
+$routes->get('/product', 'Home::product');
 
 $routes->get('/logout', 'Home::logout');
 $routes->match(['get','post'],'/page/(:any)', 'GetCompoent::component/$1');
