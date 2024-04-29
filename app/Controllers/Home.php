@@ -82,4 +82,56 @@ class Home extends Controller
     private function checkLogin(){ 
         return $this->session->has('username')?true:false;
     }
+
+    public function userlist(){
+        if($this->checkLogin()){
+            return view('page/userlist');
+        }else{
+            return view('page/login');
+        } 
+    }
+
+    public function producttype(){
+        if($this->checkLogin()){
+            return view('page/producttype');
+        }else{
+            return view('page/login');
+        } 
+    }
+    public function banklist(){
+        if($this->checkLogin()){
+            return view('page/banklist');
+        }else{
+            return view('page/login');
+        } 
+    }
+    public function bankaccount(){
+        if($this->checkLogin()){
+            return view('page/bankaccount');
+        }else{
+            return view('page/login');
+        } 
+    }
+    public function article(){
+        if($this->checkLogin()){
+            return view('page/article');
+        }else{
+            return view('page/login');
+        } 
+    }
+    public function news(){
+        if($this->checkLogin()){
+            return view('page/news');
+        }else{
+            return view('page/login');
+        } 
+    }
+    public function product(){
+        if($this->checkLogin()){
+            return view('page/product');
+        }else{
+            return view('page/login');
+        } 
+    }
+    
 }
