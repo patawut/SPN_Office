@@ -126,5 +126,12 @@ class Home extends Controller
             return view('page/login');
         } 
     }
+    public function product(){
+        if($this->checkLogin()){
+            return view('page/product');
+        }else{
+            return view('page/login');
+        } 
+    }
     
 }

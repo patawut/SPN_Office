@@ -150,7 +150,7 @@ if($user==null || $fullname==null || $typeUser==null){
 						<div class="menu-title">สินค้า</div>
 					</a>
 					<ul>
-						<li>  <a href="<?=site_url('./products')?>"><i class="bx bx-right-arrow-alt"></i>สินค้า</a> </li>
+						<li>  <a href="<?=site_url('./product')?>"><i class="bx bx-right-arrow-alt"></i>สินค้า</a> </li>
 						<li>  <a href="<?=site_url('./producttype')?>"><i class="bx bx-right-arrow-alt"></i>ประเภทสินค้า</a> </li> 
 					</ul>
 				</li>
