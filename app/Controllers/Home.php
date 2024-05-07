@@ -133,5 +133,18 @@ class Home extends Controller
             return view('page/login');
         } 
     }
-    
+    public function memberposition(){
+        if($this->checkLogin()){
+            return view('page/memberposition');
+        }else{
+            return view('page/login');
+        } 
+    }
+    public function member(){
+        if($this->checkLogin()){
+            return view('page/member');
+        }else{
+            return view('page/login');
+        } 
+    }
 }
