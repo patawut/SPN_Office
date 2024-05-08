@@ -4,41 +4,30 @@ $id = isset($_POST['id']) ? $_POST['id'] : '';
 $st = isset($_POST['st']) ? $_POST['st'] : '';
 $even = isset($_POST['even']) ? $_POST['even'] : '';
 $tid= isset($_POST['tid']) ? $_POST['tid'] : '';
-$idCard=isset($_POST['idCard']) ? $_POST['idCard'] : '';
-$firstname=isset($_POST['firstname']) ? $_POST['firstname'] : '';
-$lastname=isset($_POST['lastname']) ? $_POST['lastname'] : '';
-$lv=isset($_POST['lv']) ? $_POST['lv'] : '';
-$lv1=isset($_POST['lv1']) ? $_POST['lv1'] : '';
-$lv2=isset($_POST['lv2']) ? $_POST['lv2'] : '';
-$lv3=isset($_POST['lv3']) ? $_POST['lv3'] : '';
-$downline=isset($_POST['downline']) ? $_POST['downline'] : '';
-$firstname1=isset($_POST['firstname1']) ? $_POST['firstname1'] : '';
-$idCard1=isset($_POST['idCard1']) ? $_POST['idCard1'] : '';
+
+$idcard=isset($_POST['idcard']) ? $_POST['idcard'] : '';
+$line=isset($_POST['line']) ? $_POST['line'] : '';
+$email=isset($_POST['email']) ? $_POST['email'] : '';
+$password=isset($_POST['password']) ? $_POST['password'] : '';
+$name=isset($_POST['name']) ? $_POST['name'] : '';
+$profile_id=isset($_POST['profile_id']) ? $_POST['profile_id'] : '';
+$telephone=isset($_POST['telephone']) ? $_POST['telephone'] : '';
 $mname=isset($_POST['mname']) ? $_POST['mname'] : '';
-$address=isset($_POST['address']) ? $_POST['address'] : '';
 $photo=isset($_POST['photo']) ? $_POST['photo'] : '';
-$photo1=isset($_POST['photo1']) ? $_POST['photo1'] : '';
-$photo2=isset($_POST['photo2']) ? $_POST['photo2'] : '';
-$provinces=isset($_POST['provinces']) ? $_POST['provinces'] : '';
-$amphur=isset($_POST['amphur']) ? $_POST['amphur'] : '';
+$position_id=isset($_POST['position_id']) ? $_POST['position_id'] : '';
 
-$districts=isset($_POST['districts']) ? $_POST['districts'] : '';
-$zipcode=isset($_POST['zipcode']) ? $_POST['zipcode'] : '';
-$bankcode=isset($_POST['bankcode']) ? $_POST['bankcode'] : '';
-$bank_no=isset($_POST['bank_no']) ? $_POST['bank_no'] : '';
-$typeRegister=isset($_POST['typeRegister']) ? $_POST['typeRegister'] : '';
 
-$memID=isset($_POST['memID']) ? $_POST['memID'] : '';
-$guideMem=isset($_POST['guideMem']) ? $_POST['guideMem'] : '';
 $status=isset($_POST['status']) ? $_POST['status'] : '';
 $photourl=isset($_POST['photourl']) ? $_POST['photourl'] : '';
 $photourl1=isset($_POST['photourl1']) ? $_POST['photourl1'] : '';
 $photourl2=isset($_POST['photourl2']) ? $_POST['photourl2'] : '';
 
-$ppID=isset($_POST['ppID']) ? $_POST['ppID'] : '';
-$TYPE=isset($_POST['TYPE']) ? $_POST['TYPE'] : '';
+$tel=isset($_POST['tel']) ? $_POST['tel'] : '';
+$mail_ck=isset($_POST['mail_ck']) ? $_POST['mail_ck'] : '';
+$line_ck=isset($_POST['line_ck']) ? $_POST['line_ck'] : '';
+$profile_ck=isset($_POST['profile_ck']) ? $_POST['profile_ck'] : '';
 
-$v=isset($_POST['v']) ? $_POST['v'] : '';
+$value=isset($_POST['value']) ? $_POST['value'] : '';
 $vv=isset($_POST['vv']) ? $_POST['vv'] : '';
 $response = [];
 $date = date("Y-m-d H:i:s");
@@ -65,7 +54,7 @@ if ($even == "search"){
         if ($row) {
             if ($row) {
                 $response['status'] = 1;
-                $response['msg'] = 'success';
+                $response['msg'] = 'กำลังค้นหาข้อมูล';
                 $response['rowdata'] = $row; 
             } else {
                 $response['status'] = 0;
@@ -78,385 +67,99 @@ if ($even == "search"){
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 
-if($even == "searchProvince"){
-    $response = [
-        'even' => 'searchProvince', 
-        'ppID' => $ppID,
-        'TYPE' => $TYPE,
-    ];
-    if($TYPE=='amphures'){
-        $query_chk = $db->query("SELECT AMPHUR_ID, AMPHUR_NAME FROM `amphures` WHERE `PROVINCE_ID`='$ppID'");
-        $row = $query_chk->getResult('array');
-        if ($row) {
-            $response['status'] = 1;
-            $response['msg'] = 'success';
-            $response['rowdata'] = $row; 
-        } else {
-            $response['status'] = 0;
-            $response['msg'] = 'ไม่พบข้อมูล';
-        }
-       // echo json_encode($row, JSON_UNESCAPED_UNICODE);
-    }
-    echo json_encode($response, JSON_UNESCAPED_UNICODE);
-}
-
-if($even == "searchAmphur"){
-    $response = [
-        'even' => 'searchAmphur', 
-        'ppID' => $ppID,
-        'TYPE' => $TYPE,
-    ];
-    if($TYPE=='districts'){
-        $query_chk = $db->query("SELECT DISTRICT_ID, DISTRICT_NAME,DISTRICT_CODE FROM districts WHERE AMPHUR_ID='".$ppID."'");
-        $row = $query_chk->getResult('array');
-        if ($row) {
-            $response['status'] = 1;
-            $response['msg'] = 'success';
-            $response['rowdata'] = $row; 
-        } else {
-            $response['status'] = 0;
-            $response['msg'] = 'ไม่พบข้อมูล';
-        }
-       // echo json_encode($row, JSON_UNESCAPED_UNICODE);
-    }
-    echo json_encode($response, JSON_UNESCAPED_UNICODE);
-}
-
-if($even == "searchDistrict"){
-    $response = [
-        'even' => 'searchDistrict', 
-        'ppID' => $ppID,
-        'TYPE' => $TYPE,
-    ];
-    if($TYPE=='zipcode'){
-        $query_chk = $db->query("SELECT zipcode FROM zipcodes WHERE district_code='".$ppID."'");
-        $row = $query_chk->getResult('array');
-        if ($row) {
-            $response['status'] = 1;
-            $response['msg'] = 'success';
-            $response['rowdata'] = $row; 
-        } else {
-            $response['status'] = 0;
-            $response['msg'] = 'ไม่พบข้อมูล';
-        }
-       // echo json_encode($row, JSON_UNESCAPED_UNICODE);
-    }
-    echo json_encode($response, JSON_UNESCAPED_UNICODE);
-}
-
-
 if ($even == "add"){
     //print_r($_POST);
         $response = [
             'even' => 'add', 
         ];
         //typeRegister
-        if($lv ==1){
-            if($v==1){
-                if($vv==1){
-                    if($typeRegister==2){
-                        try {
-                            $sql1 = "INSERT INTO `member` (`memberID`, `idCard`,`firstname`, `position`,`guideCode` ,`status`) VALUES (NULL, ?, ?, ?, ?,?)";
-                            $query1 = $db->query($sql1, [$idCard1, $firstname1, $lv1 ,$guideMem, 2]);
-                            $idreturn = $db->insertID();
-                            $sql_max = "SELECT * FROM `member` WHERE  `idCard` ='$idCard1' AND `status` <> '99'";
-                            $query_max = $db->query($sql_max);
-                            $row_max = $query_max->getRowArray();
-                            $max = $row_max['memberID'];
-                            //id ล่าสุด  upline update 2 ไป และ id ที่ 2 ไปอับ downline เป็น id 22 
-                            if($downline == "L"){
-                                $sql_update_l = "UPDATE `member` SET `downlineLeft` = ?  WHERE `memberID` = ?";
-                                $query_update_l = $db->query($sql_update_l, [$max,$tid]);
-                                $sql_update_l_max = "UPDATE `member` SET  `uplineCode` = ? WHERE `memberID` = ?";
-                                $query_update_l_max = $db->query($sql_update_l_max, [$tid ,$max]);
-                            }else{
-                                $sql_update_r = "UPDATE `member` SET `downlineRight` = ? WHERE `memberID` = ?";
-                                $query_update_r = $db->query($sql_update_r, [$max, $tid]);
-                                $sql_update_r_max = "UPDATE `member` SET  `uplineCode` = ? WHERE `memberID` = ?";
-                                $query_update_r_max = $db->query($sql_update_r_max, [$tid ,$max]);
-                                
-                            }
-                            $sql_log = "INSERT INTO memberlog (`logID`, `member`,`detail`, `type` ,`status`) VALUES (NULL, ?, ?, ?, ?)";
-                                $query_log = $db->query($sql_log, [$max, 'เพิ่มข้อมูลนิติบุคคล 1 สมาชิก', '1' , 1]);
-                            $response['status'] = 1;
-                            $response['msg'] = 'บันทึกข้อมูลนิตบุคคลสำเร็จ';
-                        //  $response['idreturn']=$idreturn;        
-                        } catch (\Throwable $th) {
-                        // $response['post']=$_POST;
-                            $response['profile']="เลขประจำตัวผู้เสียภาษีนี้มีในระบบแล้ว";
-                            echo json_encode($response, JSON_UNESCAPED_UNICODE);
-                            exit();
-                        }
-                    }else{
-                        try {
-                            $sql1 = "INSERT INTO `member` (`memberID`, `idCard`,`firstname`,`lastname`, `position`,`guideCode`  ,`status`) VALUES (NULL, ?, ?, ?, ?,?,?)";
-                            $query1 = $db->query($sql1, [$idCard, $firstname, $lastname, $lv1, $guideMem , 1]);
-                            $idreturn = $db->insertID();
-                            $sql_max = "SELECT * FROM `member` WHERE `idCard` ='$idCard' AND `status` <> '99' ";
-                            $query_max = $db->query($sql_max);
-                            $row_max =  $query_max->getRowArray();
-                            $max = $row_max['memberID'];
-                            if($downline == "L"){
-                                $sql_update_l = "UPDATE `member` SET `downlineLeft` = ?  WHERE `memberID` = ?";
-                                $query_update_l = $db->query($sql_update_l, [$max,$tid]);
-                                $sql_update_l_max = "UPDATE `member` SET  `uplineCode` = ? WHERE `memberID` = ?";
-                                $query_update_l_max = $db->query($sql_update_l_max, [$tid ,$max]);
-                            }else{
-                                $sql_update_r = "UPDATE `member` SET `downlineRight` = ? WHERE `memberID` = ?";
-                                $query_update_r = $db->query($sql_update_r, [$max, $tid]);
-                                $sql_update_r_max = "UPDATE `member` SET  `uplineCode` = ? WHERE `memberID` = ?";
-                                $query_update_r_max = $db->query($sql_update_r_max, [$tid ,$max]);
-                            }
-                            $sql_log = "INSERT INTO memberlog (`logID`, `member`,`detail`, `type` ,`status`) VALUES (NULL, ?, ?, ?, ?)";
-                            $query_log = $db->query($sql_log, [$max, 'เพิ่มข้อมูลบุคคลธรรมดา 1 สมาชิก', '1' , 1]);
-                            $response['status'] = 1;
-                            $response['msg'] = 'บันทึกข้อมูลสำเร็จ';
-                        // $response['idreturn']=$idreturn;        
-                        } catch (\Throwable $th) {
-                            //$response['post']=$_POST;
-                            $response['msg']="รหัสบัตรประชาชนมีในระบบแล้ว";
-                            echo json_encode($response, JSON_UNESCAPED_UNICODE);
-                            exit();
-                        }
-                    }
-                }else{
-                    $response['status'] = 0;
-                    $response['msg'] = 'กรุณากดปุ่มเพื่อตรวจสอบเลขบัตรประชาชน/ผู้เสียภาษี ก่อน';
-                    echo json_encode($response, JSON_UNESCAPED_UNICODE);
-                }
-            }else{
-                $response['status'] = 0;
-                $response['msg'] = 'กรุณากดปุ่มเพื่อตรวจสอบรหัสผู้แนะนำ และ เลขบัตรประชาชน/ผู้เสียภาษี ก่อน';
-                echo json_encode($response, JSON_UNESCAPED_UNICODE);
-            }
-
-            if($response['status']==1){
-                $profile=array(); 
-                $profile['address']=$address;
-                $profile['provinces']=$provinces;
-                $profile['amphur']=$amphur;
-                $profile['districts']=$districts;
-                $profile['zipcode']=$zipcode;
-                $profile['bankcode']=$bankcode;
-                $profile['bank_no']=$bank_no;
-                $profile['typeRegister']=$typeRegister; 
-                $profile['photoCard']=$photourl;
-                $profile['photoCard1']=$photourl1;
-                $profile['photoBook']=$photourl2;
-              
-                $datainsertFieldProfile= json_encode($profile, JSON_UNESCAPED_UNICODE);
-                // $row=json_decode($data,true);
-                //$row['address'];
-                
-                try {
-                    
-                    $sqlMemberProfile = "INSERT INTO `memberprofile` (`member`, `profile`,`type`) VALUES (?, ?, ?)";
-                    $db->query($sqlMemberProfile, [$idreturn, $datainsertFieldProfile,$typeRegister]);
-                    $response['msg'] = 'บันทึกข้อมูลสำเร็จ';
-                    echo json_encode($response, JSON_UNESCAPED_UNICODE);
-                    exit();
-                } catch (\Throwable $th) {
-                    $response['profile']=$datainsertFieldProfile;
-                    $response['msg']="Can't Save in member Profile";
-                    echo json_encode($response, JSON_UNESCAPED_UNICODE);
-                    exit();
-                }
-            }
-
-        }else if($lv ==3){
-            if($v==1){
-                if($vv==1){
-                    if($typeRegister==2){
-                        $lv = array($lv1, $lv2, $lv3);
-                        $i=1;
-                        foreach ($lv as $lvs) {
-                            $idCard11 = $idCard1 . $i;
-                            $sql3 = "INSERT INTO `member` (`memberID`, `idCard`,`firstname`,`lastname`, `position`,`guideCode` , `status`) VALUES (NULL, ?, ?, ?, ?,?,?)";
-                            $query3 = $db->query($sql3, [$idCard11, $firstname1, $lastname, $lvs, $guideMem , 2]);
-                            $sql_max = "SELECT * FROM `member` WHERE  `idCard` ='$idCard11' AND `status` <> '99'";
-                            $query_max = $db->query($sql_max);
-                            $row_max = $query_max->getRowArray();
-                            $max = $row_max['memberID'];
-                            $data[] = $max;
-                            $sql_log = "INSERT INTO memberlog (`logID`, `member`,`detail`, `type` ,`status`) VALUES (NULL, ?, ?, ?, ?)";
-                            $query_log = $db->query($sql_log, [$max, 'เพิ่มนิติบุคคล 3 สมาชิก (สมาชิกลำดับที่'. $i.')', '1' , 1]);
-
-                                if($downline == "L"){
-                                    $sql_update_l = "UPDATE `member` SET `downlineLeft` = ?  WHERE `memberID` = ?";
-                                    $query_update_l = $db->query($sql_update_l, [$data[0],$tid]);
-                                    $sql_update_l_max = "UPDATE `member` SET  `uplineCode` = ? WHERE `memberID` = ?";
-                                    $query_update_l_max = $db->query($sql_update_l_max, [$tid ,$data[0]]);
-                                }else{
-                                    $sql_update_r = "UPDATE `member` SET `downlineRight` = ? WHERE `memberID` = ?";
-                                    $query_update_r = $db->query($sql_update_r, [$data[0], $tid]);
-                                    $sql_update_r_max = "UPDATE `member` SET  `uplineCode` = ? WHERE `memberID` = ?";
-                                    $query_update_r_max = $db->query($sql_update_r_max, [$tid ,$data[0]]);
-                            }
-                            $i++;
-                        }
-                        $sql_update_l2_max = "UPDATE `member` SET  `uplineCode` = ? WHERE `memberID` = ?";
-                        $query_update_l2_max = $db->query($sql_update_l2_max, [$data[0] ,$data[1]]);
-                        $sql_update_l3_max = "UPDATE `member` SET  `uplineCode` = ? WHERE `memberID` = ?";
-                        $query_update_l3_max = $db->query($sql_update_l3_max, [$data[0] ,$data[2]]);
-
-
-                        $sql_update_l1 = "UPDATE `member` SET `downlineLeft` = ? ,`downlineRight` = ? WHERE `memberID` = ?";
-                        $query_update_l1 = $db->query($sql_update_l1, [$data[1],$data[2],$data[0]]);
-
-                        $response['status'] = 1;
-                    // $response['msg'] = 'บันทึกข้อมูลสำเร็จ';
-
-                        if($response['status']==1){
-                            $profile=array(); 
-                            $profile['address']=$address;
-                            $profile['provinces']=$provinces;
-                            $profile['amphur']=$amphur;
-                            $profile['districts']=$districts;
-                            $profile['zipcode']=$zipcode;
-                            $profile['bankcode']=$bankcode;
-                            $profile['bank_no']=$bank_no;
-                            $profile['typeRegister']=$typeRegister; 
-                            $profile['photoCard']=$photourl;
-                            $profile['photoCard1']=$photourl1;
-                            $profile['photoBook']=$photourl2;
-                            $datainsertFieldProfile= json_encode($profile, JSON_UNESCAPED_UNICODE);
-                            // $row=json_decode($data,true);
-                            //$row['address'];
-                            
-                            try {
-                                for($j=0;$j<=2;$j++){
-                                    $sqlMemberProfile = "INSERT INTO `memberprofile` (`member`, `profile`,`type`) VALUES (?, ?, ?)";
-                                    $db->query($sqlMemberProfile, [$data[$j], $datainsertFieldProfile,$typeRegister]);
-                                    //$response['msg'] = 'บันทึกข้อมูลสำเร็จ';
-                                    
-                                }
-                                $response['msg'] = 'บันทึกข้อมูลสำเร็จ';
-                                echo json_encode($response, JSON_UNESCAPED_UNICODE);
-                                exit();
-                            } catch (\Throwable $th) {
-                                $response['profile']=$datainsertFieldProfile;
-                                $response['msg']="Can't Save in member Profile";
-                                echo json_encode($response, JSON_UNESCAPED_UNICODE);
-                                exit();
-                            }
-                            
-                            
-                        }
-                    }else{
-                        $lv = array($lv1, $lv2, $lv3);
-                        $i=1;
-                        foreach ($lv as $lvs) {
-                            $idCard1 = $idCard . $i;
-                            $sql4 = "INSERT INTO `member` (`memberID`, `idCard`,`firstname`,`lastname`, `position`, `guideCode`, `status`) VALUES (NULL, ?, ?, ?, ?,?,?)";
-                            $query4 = $db->query($sql4, [$idCard1, $firstname, $lastname, $lvs, $guideMem, 1]);
-                            $sql_max = "SELECT * FROM `member` WHERE  `idCard` ='$idCard1' AND `status` <> '99'";
-                            $query_max = $db->query($sql_max);
-                            $row_max = $query_max->getRowArray();
-                            $max = $row_max['memberID'];
-                            $sql_log = "INSERT INTO memberlog (`logID`, `member`,`detail`, `type` ,`status`) VALUES (NULL, ?, ?, ?, ?)";
-                            $query_log = $db->query($sql_log, [$max, 'เพิ่มบุคคลธรรมดา 3 สมาชิก (สมาชิกลำดับที่'. $i.')', '1' , 1]);
-                            $data[] = $max;
-
-                                if($downline == "L"){
-                                    $sql_update_l = "UPDATE `member` SET `downlineLeft` = ?  WHERE `memberID` = ?";
-                                    $query_update_l = $db->query($sql_update_l, [$data[0],$tid]);
-                                    $sql_update_l_max = "UPDATE `member` SET  `uplineCode` = ? WHERE `memberID` = ?";
-                                    $query_update_l_max = $db->query($sql_update_l_max, [$tid ,$data[0]]);
-                                }else{
-                                    $sql_update_r = "UPDATE `member` SET `downlineRight` = ? WHERE `memberID` = ?";
-                                    $query_update_r = $db->query($sql_update_r, [$data[0], $tid]);
-                                    $sql_update_r_max = "UPDATE `member` SET  `uplineCode` = ? WHERE `memberID` = ?";
-                                    $query_update_r_max = $db->query($sql_update_r_max, [$tid ,$data[0]]);
-                                }
-                            $i++;
-                        }
-                        $sql_update_l2_max = "UPDATE `member` SET  `uplineCode` = ? WHERE `memberID` = ?";
-                        $query_update_l2_max = $db->query($sql_update_l2_max, [$data[0] ,$data[1]]);
-
-                        $sql_update_l3_max = "UPDATE `member` SET  `uplineCode` = ? WHERE `memberID` = ?";
-                        $query_update_l3_max = $db->query($sql_update_l3_max, [$data[0] ,$data[2]]);
-
-                        $sql_update_l1 = "UPDATE `member` SET `downlineLeft` = ? ,`downlineRight` = ? WHERE `memberID` = ?";
-                        $query_update_l1 = $db->query($sql_update_l1, [$data[1],$data[2],$data[0]]);
-
-                        
-                        $response['data'] = $data;
-                        $response['status'] = 1;
-                    // $response['msg'] = 'บันทึกข้อมูลสำเร็จ';
-
-                        if($response['status']==1){
-                            $profile=array(); 
-                            $profile['address']=$address;
-                            $profile['provinces']=$provinces;
-                            $profile['amphur']=$amphur;
-                            $profile['districts']=$districts;
-                            $profile['zipcode']=$zipcode;
-                            $profile['bankcode']=$bankcode;
-                            $profile['bank_no']=$bank_no;
-                            $profile['typeRegister']=$typeRegister; 
-                            $profile['photoCard']=$photourl;
-                            $profile['photoCard1']=$photourl1;
-                            $profile['photoBook']=$photourl2;
-                            $datainsertFieldProfile= json_encode($profile, JSON_UNESCAPED_UNICODE);
-                            // $row=json_decode($data,true);
-                            //$row['address'];
-                            
-                            try {
-                                for($j=0;$j<=2;$j++){
-                                    $sqlMemberProfile = "INSERT INTO `memberprofile` (`member`, `profile`,`type`) VALUES (?, ?, ?)";
-                                    $db->query($sqlMemberProfile, [$data[$j], $datainsertFieldProfile,$typeRegister]);
-                                    
-                                }
-                                $response['msg'] = 'บันทึกข้อมูลสำเร็จ';
-                                echo json_encode($response, JSON_UNESCAPED_UNICODE);
-                            // exit();
-                            } catch (\Throwable $th) {
-                                $response['profile']=$datainsertFieldProfile;
-                                $response['msg']="Can't Save in member Profile";
-                                echo json_encode($response, JSON_UNESCAPED_UNICODE);
-                                exit();
-                            }
-                        }
-                        
-                    }
-                }else{
-                    $response['status'] = 0;
-                    $response['msg'] = 'กรุณากดปุ่มเลขบัตรประชาชน/ผู้เสียภาษีก่อน';
-                    echo json_encode($response, JSON_UNESCAPED_UNICODE);
-                }    
-                //echo json_encode($response, JSON_UNESCAPED_UNICODE);
-            }else{
-                $response['status'] = 0;
-                $response['msg'] = 'กรุณากดปุ่มเพื่อตรวจสอบรหัสผู้แนะนำก่อน';
-                echo json_encode($response, JSON_UNESCAPED_UNICODE);
-            }
+        if($position_id != '99'){
+            $pass = password_hash($password,PASSWORD_DEFAULT);
+            $sql_member = "INSERT INTO `member` (`member_id`, `profile_id`,`password`, `telephone`,`email`,`line`,`name`,`photo`,`position_id` ,`status`) VALUES (NULL, ?, ?, ?, ?,?,?,?,?,?)";
+            $query_member = $db->query($sql_member, [$profile_id, $pass, $telephone, $email, $line,$name,$photourl ,$position_id, $status]);
+            $idreturn = $db->insertID();
             
+            //$sql_bank = "INSERT INTO `member_bank` (`member_bank_id`, `member_id`,`bank_id`, `numbank`,`account_name`,`bookbank_photo` ,`status`) VALUES (NULL, ?, ?, ?, ?,?,?)";
+            //$query_bank = $db->query($sql_bank, [$idreturn, $bank_id, $numbank, $account_name,$photourl2 , $status]);
+        
+            //$sql_info = "INSERT INTO `member_info` (`member_id`, `idcard`,`firstname`, `lastname`,`birthday`,`address`,`zipcode`,`idcard_photo`,`note` ,`status`) VALUES (?, ?, ?, ?,?,?,?,?,?,?)";
+            //$query_info = $db->query($sql_info, [$idreturn, $idcard, $firstname, $lastname, $birthday,$address,$zipcode ,$photourl1 ,$note , $status]);
+            if ($query_member) {
+                $response['status']=1;
+                $response['msg']='บันทึกข้อมูลสำเร็จ';
+            } else {
+                $response['status']=0;
+                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+            }
+        }else{
+            $response['status'] = 0;
+            $response['msg'] = 'กรุณาเลือกระดับสมาชิก';
         }
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 
-if($even == "searchMem"){
+if($even == "edit"){
     $response = [
-        'even' => 'searchMem', 
-        'guideMem' => $guideMem,
+        'even' => 'edit', 
         'tid' => $tid,
     ];
-        //ติดตรงนี้ ตรวจสอบ guidecode รหัสนั้นมีแล้วหรือยัง ถ้าไม่มีใส่ได้ แต่ห้ามใส่ซ้ำรหัสของที่จะสร้าง สมมุติเลย 2 มา ห้ามใส่ 2 ลงในguide
-        //$query_chk = $db->query("SELECT * FROM `member`WHERE `memberID` LIKE '%$guideMem%' AND `guideCode` IS NULL;");
-        $query_chk = $db->query("SELECT * FROM `member`WHERE `memberID` = '$guideMem'  AND  `status` <> '99' ");
-        $row = $query_chk->getRowArray();
-        if ($row){
-            if($row['memberID'] != $tid){
-                $response['status'] = 1;
-                $response['msg'] = 'สามารถใช้รหัสแนะนำนี้ได้';
-            }else{
-                $response['status'] = 0;
-                $response['msg'] = 'เป็นรหัสเหมือนกับด้านบน';
-            }
+     
+    if($position_id != '99'){
+        $pass = password_hash($password,PASSWORD_DEFAULT);
+        $sql_member = "UPDATE `member` SET `profile_id` = ?,`password` = ?, `telephone` = ?, `email` = ?, `line` = ?, `name` = ?, `photo` = ?, `position_id` = ?, `status` = ?  WHERE `member_id` = ?";
+        $query_member = $db->query($sql_member, [$profile_id, $pass, $telephone, $email, $line,$name,$photourl ,$position_id, $status,$tid]);
+     
+        if ($query_member) {
+            $response['status']=1;
+            $response['msg']='บันทึกข้อมูลสำเร็จ';
         } else {
-            $response['status'] = 0;
-            $response['msg'] = 'ไม่มีผู้แนะนำรหัสนี้';
+            $response['status']=0;
+            $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
         }
-       // echo json_encode($row, JSON_UNESCAPED_UNICODE);
+    }else{
+        $response['status'] = 0;
+        $response['msg'] = 'กรุณาเลือกระดับสมาชิก';
+    }
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+if($even=="editstatus"){
+    $response = [
+        'even' => 'editstatus',
+        'id' => $id,
+        'value' => $value,
+    ];
+    if($value == '1'){
+        $query = $db->query("UPDATE `member` SET `status` = ?  WHERE `member_id` = ?", [$value,$id]);
+        if ($query) {
+            $response['status']=1;
+            $response['msg']='บันทึกข้อมูลสำเร็จ';
+        } else {
+            $response['status']=0;
+            $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+        }
+    }else{
+        $query = $db->query("UPDATE `member` SET `status` = ?  WHERE `member_id` = ?", [$value,$id]);
+        if ($query) {
+            $response['status']=1;
+            $response['msg']='บันทึกข้อมูลสำเร็จ';
+        } else {
+            $response['status']=0;
+            $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+        }
+    }
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+if ($even == "del") { 
+    $query = $db->query("UPDATE  `member` SET  `status` = 99  WHERE `member_id` = ?", [$id]);
+    if ($query) {
+        $response['status']=1;
+        $response['msg']='บันทึกข้อมูลสำเร็จ';
+    } else {
+        $response['status']=0;
+        $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+    }
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 
@@ -483,22 +186,78 @@ if($even == "searchMemID"){
 }
 
 
-if($even == "searchMemID1"){
+if($even == "checktelephone"){
     $response = [
-        'even' => 'searchMemID1', 
-        'memID' => $memID,
-        'tid' => $tid,
+        'even' => 'checktelephone', 
+        'idcard' => $tel,
     ];
-        //ติดตรงนี้ ตรวจสอบ guidecode รหัสนั้นมีแล้วหรือยัง ถ้าไม่มีใส่ได้ แต่ห้ามใส่ซ้ำรหัสของที่จะสร้าง สมมุติเลย 2 มา ห้ามใส่ 2 ลงในguide
-        //$query_chk = $db->query("SELECT * FROM `member`WHERE `memberID` LIKE '%$guideMem%' AND `guideCode` IS NULL;");
-        $query_chk = $db->query("SELECT * FROM `member` WHERE `idCard` LIKE '%$memID%'  AND  `status` <> '99' ");
+        $query_chk = $db->query("SELECT * FROM `member` WHERE `telephone` = '$tel'  AND  `status` = '1'");
         $row = $query_chk->getRowArray();
         if ($row){
             $response['status'] = 0;
-            $response['msg'] = 'มีเลขประจำตัวผู้เสียภาษีนี้แล้ว';
+            $response['msg'] = 'มีเบอร์นี้แล้ว';
         }else{
             $response['status'] = 1;
-            $response['msg'] = 'สามารถใช้เลขประจำตัวผู้เสียภาษีนี้ได้';
+            $response['msg'] = 'สามารถใช้เบอร์นี้ได้';
+          
+        }
+       // echo json_encode($row, JSON_UNESCAPED_UNICODE);
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+
+if($even == "checkmail"){
+    $response = [
+        'even' => 'checkmail', 
+        'mail' => $mail_ck,
+    ];
+        $query_chk = $db->query("SELECT * FROM `member` WHERE `email` = '$mail_ck'  AND  `status` = '1'");
+        $row = $query_chk->getRowArray();
+        if ($row){
+            $response['status'] = 0;
+            $response['msg'] = 'มีอีเมล์นี้แล้ว';
+        }else{
+            $response['status'] = 1;
+            $response['msg'] = 'สามารถใช้อีเมล์นี้ได้';
+          
+        }
+       // echo json_encode($row, JSON_UNESCAPED_UNICODE);
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+if($even == "checkline"){
+    $response = [
+        'even' => 'checkline', 
+        'line' => $line_ck,
+    ];
+        $query_chk = $db->query("SELECT * FROM `member` WHERE `line` = '$line_ck'  AND  `status` = '1'");
+        $row = $query_chk->getRowArray();
+        if ($row){
+            $response['status'] = 0;
+            $response['msg'] = 'มี Line นี้แล้ว';
+        }else{
+            $response['status'] = 1;
+            $response['msg'] = 'สามารถใช้ Line นี้ได้';
+          
+        }
+       // echo json_encode($row, JSON_UNESCAPED_UNICODE);
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+if($even == "checkprofile"){
+    $response = [
+        'even' => 'checkprofile', 
+        'line' => $profile_ck,
+    ];
+        $query_chk = $db->query("SELECT * FROM `member` WHERE `profile_id` = '$profile_ck'  AND  `status` = '1'");
+        $row = $query_chk->getRowArray();
+        if ($row){
+            $response['status'] = 0;
+            $response['msg'] = 'มี id นี้แล้ว';
+        }else{
+            $response['status'] = 1;
+            $response['msg'] = 'สามารถใช้ id นี้ได้';
+          
         }
        // echo json_encode($row, JSON_UNESCAPED_UNICODE);
     echo json_encode($response, JSON_UNESCAPED_UNICODE);

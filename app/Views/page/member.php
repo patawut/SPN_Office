@@ -2,7 +2,6 @@
 
 <div class="page-wrapper">
     <div class="page-content">
-        <div class="col-12" id="contentTop"></div>
         <div class="col-12 mt-2" id="contentData"></div>
 
     </div>

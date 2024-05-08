@@ -8,4 +8,5 @@
 <br>
 <script>
     $.post("./component/member/search",(data)=> {  $('#showSearch').html(data);},"html");
+    $.post("./component/member/list",(data)=> {  $('#showlist').html(data);},"html");
 </script>

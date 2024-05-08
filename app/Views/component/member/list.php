@@ -177,7 +177,7 @@ $(document).ready(function() {
                         showConfirmButton: false,
                         timer: 1500
                     }).then(function() {
-                        $.post("./component/userlist/list", (data) => {
+                        $.post("./component/member/list", (data) => {
                             $('#contentData').html(data);
                         }, "html");
                     });
