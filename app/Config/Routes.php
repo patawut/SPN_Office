@@ -49,6 +49,9 @@ $routes->get('/article', 'Home::article');
 $routes->get('/news', 'Home::news');
 $routes->get('/product', 'Home::product');
 
+$routes->get('/memberposition', 'Home::memberposition');
+$routes->get('/member', 'Home::member');
+
 $routes->get('/logout', 'Home::logout');
 $routes->match(['get','post'],'/page/(:any)', 'GetCompoent::component/$1');
 $routes->match(['get','post'],'/component/(:any)/(:any)', 'GetCompoent::subComponent/$1/$2');

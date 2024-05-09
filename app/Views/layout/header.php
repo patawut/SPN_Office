@@ -108,7 +108,7 @@ if($user==null || $fullname==null || $typeUser==null){
 						<div class="menu-title">ข้อมูลสมาชิก</div>
 					</a>
 					<ul>
-						<li> <a href="form-elements.html"><i class="bx bx-right-arrow-alt"></i>ค้นหาสมาชิก</a></li>
+						<li> <a href="<?=site_url('./member')?>"><i class="bx bx-right-arrow-alt"></i>ค้นหาสมาชิก</a></li>
 						<li> <a href="form-input-group.html"><i class="bx bx-right-arrow-alt"></i>ผังองค์กร</a> </li> 
 						<li> <a href="form-input-group.html"><i class="bx bx-right-arrow-alt"></i>ลบคะแนนทั้งสาย</a> </li> 
 						<li> <a href="form-validations.html"><i class="bx bx-right-arrow-alt"></i>ตรวจสอบ</a> </li> 
@@ -122,6 +122,7 @@ if($user==null || $fullname==null || $typeUser==null){
 					</a>
 					<ul>
 						<li> <a href="table-basic-table.html"><i class="bx bx-right-arrow-alt"></i>จัดการตำแหน่ง</a> </li> 
+						<li> <a href="<?=site_url('./memberposition')?>"><i class="bx bx-right-arrow-alt"></i>จัดการตำแหน่งสมาชิก</a> </li> 
 					</ul>
 				</li>
 				<li class="menu-label">Contents</li> 

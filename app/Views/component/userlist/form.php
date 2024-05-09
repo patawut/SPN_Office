@@ -82,7 +82,7 @@
             <div class="col-12">
                 <label for="password" class="form-label">Password</label>
                 <div class="input-group"> <span class="input-group-text bg-transparent"><i
-                            class='bx bxs-lock-open'></i></span>
+                            class='fadeIn animated bx bx-key'></i></span>
                     <input type="text" class="form-control border-start-0" id="password" name="password"
                         placeholder="กรุณากรอกรหัสผ่าน" <?php if($even == "add"){ echo "required"; }else{   }?> />
                 </div>
