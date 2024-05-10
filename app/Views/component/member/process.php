@@ -4,6 +4,8 @@ $id = isset($_POST['id']) ? $_POST['id'] : '';
 $st = isset($_POST['st']) ? $_POST['st'] : '';
 $even = isset($_POST['even']) ? $_POST['even'] : '';
 $tid= isset($_POST['tid']) ? $_POST['tid'] : '';
+$infoid= isset($_POST['infoid']) ? $_POST['infoid'] : '';
+$nobankid= isset($_POST['nobankid']) ? $_POST['nobankid'] : '';
 
 $idcard=isset($_POST['idcard']) ? $_POST['idcard'] : '';
 $line=isset($_POST['line']) ? $_POST['line'] : '';
@@ -16,6 +18,16 @@ $mname=isset($_POST['mname']) ? $_POST['mname'] : '';
 $photo=isset($_POST['photo']) ? $_POST['photo'] : '';
 $position_id=isset($_POST['position_id']) ? $_POST['position_id'] : '';
 
+$firstname=isset($_POST['firstname']) ? $_POST['firstname'] : '';
+$lastname=isset($_POST['lastname']) ? $_POST['lastname'] : '';
+$birthday=isset($_POST['birthday']) ? $_POST['birthday'] : '';
+$address=isset($_POST['address']) ? $_POST['address'] : '';
+$zipcode=isset($_POST['zipcode']) ? $_POST['zipcode'] : '';
+$note=isset($_POST['note']) ? $_POST['note'] : '';
+
+$bank_id=isset($_POST['bank_id']) ? $_POST['bank_id'] : '';
+$numbank=isset($_POST['numbank']) ? $_POST['numbank'] : '';
+$account_name=isset($_POST['account_name']) ? $_POST['account_name'] : '';
 
 $status=isset($_POST['status']) ? $_POST['status'] : '';
 $photourl=isset($_POST['photourl']) ? $_POST['photourl'] : '';
@@ -26,6 +38,13 @@ $tel=isset($_POST['tel']) ? $_POST['tel'] : '';
 $mail_ck=isset($_POST['mail_ck']) ? $_POST['mail_ck'] : '';
 $line_ck=isset($_POST['line_ck']) ? $_POST['line_ck'] : '';
 $profile_ck=isset($_POST['profile_ck']) ? $_POST['profile_ck'] : '';
+$idcard_ck=isset($_POST['idcard_ck']) ? $_POST['idcard_ck'] : '';
+$numbank_ck=isset($_POST['numbank_ck']) ? $_POST['numbank_ck'] : '';
+
+
+
+
+
 
 $value=isset($_POST['value']) ? $_POST['value'] : '';
 $vv=isset($_POST['vv']) ? $_POST['vv'] : '';
@@ -98,6 +117,85 @@ if ($even == "add"){
         echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 
+
+if ($even == "addInfo"){
+    //print_r($_POST);
+        $response = [
+            'even' => 'addInfo', 
+        ];
+        //typeRegister
+       
+        $sql_info = "INSERT INTO `member_info` (`member_id`, `idcard`,`firstname`, `lastname`,`birthday`,`address`,`zipcode`,`idcard_photo`,`note` ,`status`) VALUES (?, ?, ?, ?,?,?,?,?,?,?)";
+        $query_info = $db->query($sql_info, [$infoid, $idcard, $firstname, $lastname, $birthday,$address,$zipcode ,$photourl1 ,$note , 1]);
+
+            if ($query_info) {
+                $response['status']=1;
+                $response['msg']='บันทึกข้อมูลสำเร็จ';
+            } else {
+                $response['status']=0;
+                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+            }
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+if ($even == "editInfo"){
+    //print_r($_POST);
+        $response = [
+            'even' => 'editInfo', 
+        ];
+        //typeRegister
+        $sql_info = "UPDATE `member_info` SET `idcard` = ?,`firstname` = ?, `lastname` = ?, `birthday` = ?, `address` = ?, `zipcode` = ?, `idcard_photo` = ?, `note` = ?, `status` = ?  WHERE `member_id` = ?";
+        $query_info = $db->query($sql_info, [$idcard, $firstname, $lastname, $birthday, $address,$zipcode,$photourl1 ,$note, $status,$infoid]);
+
+            if ($query_info) {
+                $response['status']=1;
+                $response['msg']='บันทึกข้อมูลสำเร็จ';
+            } else {
+                $response['status']=0;
+                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+            }
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+
+if ($even == "addBank"){
+    //print_r($_POST);
+        $response = [
+            'even' => 'addBank', 
+        ];
+        //typeRegister
+            $sql_bank = "INSERT INTO `member_bank` (`member_bank_id`, `member_id`,`bank_id`, `numbank`,`account_name`,`bookbank_photo` ,`status`) VALUES (NULL, ?, ?, ?, ?,?,?)";
+            $query_bank = $db->query($sql_bank, [$nobankid, $bank_id, $numbank, $account_name,$photourl2 , 1]);
+
+            if ($query_bank) {
+                $response['status']=1;
+                $response['msg']='บันทึกข้อมูลสำเร็จ';
+            } else {
+                $response['status']=0;
+                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+            }
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+if ($even == "editBank"){
+    //print_r($_POST);
+        $response = [
+            'even' => 'editBank', 
+        ];
+        //typeRegister
+        $sql_info = "UPDATE `member_bank` SET `bank_id` = ?,`numbank` = ?, `bookbank_photo` = ?  WHERE `member_id` = ?";
+        $query_info = $db->query($sql_info, [$bank_id, $numbank, $account_name, $photourl2,$nobankid]);
+
+            if ($query_info) {
+                $response['status']=1;
+                $response['msg']='บันทึกข้อมูลสำเร็จ';
+            } else {
+                $response['status']=0;
+                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+            }
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
 if($even == "edit"){
     $response = [
         'even' => 'edit', 
@@ -115,6 +213,45 @@ if($even == "edit"){
         } else {
             $response['status']=0;
             $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+        }
+    }else{
+        $response['status'] = 0;
+        $response['msg'] = 'กรุณาเลือกระดับสมาชิก';
+    }
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+if($even == "editMem"){
+    $response = [
+        'even' => 'editMem', 
+        'tid' => $tid,
+    ];
+     
+    if($position_id != '99'){
+        if($password == ""){
+            $pass = password_hash($password,PASSWORD_DEFAULT);
+            $sql_member = "UPDATE `member` SET `profile_id` = ? , `telephone` = ?, `email` = ?, `line` = ?, `name` = ?, `photo` = ?, `position_id` = ? WHERE `member_id` = ?";
+            $query_member = $db->query($sql_member, [$profile_id, $telephone, $email, $line,$name,$photourl ,$position_id,$tid]);
+         
+            if ($query_member) {
+                $response['status']=1;
+                $response['msg']='บันทึกข้อมูลสำเร็จ';
+            } else {
+                $response['status']=0;
+                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+            }
+        }else{
+            $pass = password_hash($password,PASSWORD_DEFAULT);
+            $sql_member = "UPDATE `member` SET `profile_id` = ?,`password` = ?, `telephone` = ?, `email` = ?, `line` = ?, `name` = ?, `photo` = ?, `position_id` = ? WHERE `member_id` = ?";
+            $query_member = $db->query($sql_member, [$profile_id, $pass, $telephone, $email, $line,$name,$photourl ,$position_id,$tid]);
+         
+            if ($query_member) {
+                $response['status']=1;
+                $response['msg']='บันทึกข้อมูลสำเร็จ';
+            } else {
+                $response['status']=0;
+                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+            }
         }
     }else{
         $response['status'] = 0;
@@ -260,5 +397,62 @@ if($even == "checkprofile"){
           
         }
        // echo json_encode($row, JSON_UNESCAPED_UNICODE);
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+if($even == "checkidcard"){
+    $response = [
+        'even' => 'checkidcard', 
+        'idcard' => $idcard_ck,
+    ];
+        $query_chk = $db->query("SELECT * FROM `member_info` WHERE `idcard` = '$idcard_ck'  AND  `status` = '1'");
+        $row = $query_chk->getRowArray();
+        if ($row){
+            $response['status'] = 0;
+            $response['msg'] = 'มีเลขบัตรประชาชนนี้แล้ว';
+        }else{
+            $response['status'] = 1;
+            $response['msg'] = 'สามารถใช้เลขบัตรประชาชนนี้ได้';
+          
+        }
+       // echo json_encode($row, JSON_UNESCAPED_UNICODE);
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+if($even == "checknumbank"){
+    $response = [
+        'even' => 'checknumbank', 
+        'numbank' => $numbank_ck,
+    ];
+        $query_chk = $db->query("SELECT * FROM `member_bank` WHERE `numbank` = '$numbank_ck'  AND  `status` = '1'");
+        $row = $query_chk->getRowArray();
+        if ($row){
+            $response['status'] = 0;
+            $response['msg'] = 'มีเลขบัญขีธนาคารนี้แล้ว';
+        }else{
+            $response['status'] = 1;
+            $response['msg'] = 'สามารถใช้บัญขีธนาคารนี้ได้';
+          
+        }
+       // echo json_encode($row, JSON_UNESCAPED_UNICODE);
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+
+if ($even == "del") { 
+
+    $sql = "UPDATE `member` SET `status` = ?  WHERE `member_id` = ?";
+    $query = $db->query($sql, [99,$id]);
+
+    $sql_bank = "UPDATE `member_bank` SET `status` = ? WHERE `member_id` = ?";
+    $query_bank = $db->query($sql_bank, [99,$id]);
+
+    $sql_info = "UPDATE `member_info` SET `status` = ?  WHERE `member_id` = ?";
+    $query_info = $db->query($sql_info, [99,$id]);
+    
+    
+    $response['status']=1;
+    $response['msg']='บันทึกข้อมูลสำเร็จ';
+
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }

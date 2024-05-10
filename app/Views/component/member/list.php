@@ -66,6 +66,12 @@ $query = $db->query("SELECT * FROM `member` WHERE `member_id` LIKE '%$id%' AND `
                             <button class="btn btn-outline-secondary dropdown-toggle bg-info" type="button"
                                 data-bs-toggle="dropdown" aria-expanded="false"><i class="lni lni-cog"></i></button>
                             <ul class="dropdown-menu">
+                                <li> <a class="dropdown-item text-dark ControlDesc" tID="<?=esc($row['member_id'])?>"
+                                        st="<?=$row['status']?>" href="javascript:;"><i
+                                            class="fadeIn animated bx bx-detail"></i>&nbsp;
+                                        รายละเอียด</a>
+                                </li>
+                                <hr />
                                 <li> <a class="dropdown-item text-warning ControlEdit" tID="<?=esc($row['member_id'])?>"
                                         href="javascript:;"><i
                                             class="fadeIn animated bx bx-edit"></i>&nbsp;แก้ไขข้อมูล</a>
@@ -95,7 +101,19 @@ $query = $db->query("SELECT * FROM `member` WHERE `member_id` LIKE '%$id%' AND `
 $(document).ready(function() {
     $('#add').click(function(e) {
         e.preventDefault();
-        $.post("./component/member/form", (data) => {
+        $.post("./component/member/form_add", (data) => {
+            $('#contentData').html(data);
+        }, "html");
+    });
+
+    $('.ControlDesc').click(function(e) {
+        e.preventDefault();
+        let id = $(this).attr('tID');
+        var even = 'edit';
+        $.post("./component/member/form", {
+            even: even,
+            id: id
+        }, (data) => {
             $('#contentData').html(data);
         }, "html");
     });
@@ -121,7 +139,7 @@ $(document).ready(function() {
                         st: st
                     },
                     function(data) {
-                        //console.log(data) test data เมื่อเปี่ยนเป็น html
+                        // console.log(data) 
                         if (data.status == 1) {
                             Swal.fire({
                                 icon: 'success',
@@ -151,7 +169,7 @@ $(document).ready(function() {
         e.preventDefault();
         let id = $(this).attr('tID');
         var even = 'edit';
-        $.post("./component/member/form", {
+        $.post("./component/member/form_add", {
             even: even,
             id: id
         }, (data) => {
@@ -193,5 +211,7 @@ $(document).ready(function() {
     });
 
     $('#dataTable').DataTable();
+
+
 });
 </script>
