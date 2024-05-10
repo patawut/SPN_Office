@@ -440,6 +440,9 @@ if($even == "checknumbank"){
 
 
 if ($even == "del") { 
+    $response = [
+        'even' => 'del', 
+    ];
 
     $sql = "UPDATE `member` SET `status` = ?  WHERE `member_id` = ?";
     $query = $db->query($sql, [99,$id]);
@@ -454,5 +457,20 @@ if ($even == "del") {
     $response['status']=1;
     $response['msg']='บันทึกข้อมูลสำเร็จ';
 
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
+
+
+if ($even == "dela") { 
+    $query = $db->query("UPDATE  `member` SET `status` = 99  WHERE `member_id` = ?", [$id]);
+    $query1 = $db->query("UPDATE  `member_bank` SET `status` = 99  WHERE `member_id` = ?", [$id]);
+    $query2 = $db->query("UPDATE  `member_info` SET `status` = 99  WHERE `member_id` = ?", [$id]);
+    if ($query) {
+        $response['status']=1;
+        $response['msg']='บันทึกข้อมูลสำเร็จ';
+    } else {
+        $response['status']=0;
+        $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+    }
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }

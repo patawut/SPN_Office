@@ -134,7 +134,7 @@ $(document).ready(function() {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 $.post("./component/member/process", {
-                        even: 'del',
+                        even: 'dela',
                         id: id,
                         st: st
                     },
