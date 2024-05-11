@@ -1,18 +1,16 @@
 <?php 
-$fc = new \App\Helpers\fcProduct($db);
-
 $return=array();
-$query = $db->query("SELECT * FROM `product`  WHERE `status` <> '99'  ORDER BY `product_id` DESC ");
+$query = $db->query("SELECT * FROM `member_position`  WHERE `status` <> '99'  ORDER BY `position_id` DESC ");
 ?>
 
 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-    <div class="breadcrumb-title pe-3"><i class="fadeIn animated bx bx-box"></i>  ข้อมูลสินค้า</div>
+    <div class="breadcrumb-title pe-3"><i class="fadeIn animated bx bx-grid-alt"></i>  ข้อมูลตำแหน่งสมาชิก</div>
     <div class="ps-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="<?=site_url('./')?>"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">จัดการข้อมูลสินค้า</li>
+                <li class="breadcrumb-item active" aria-current="page">จัดการข้อมูลตำแหน่งสมาชิก</li>
             </ol>
         </nav>
     </div>
@@ -23,14 +21,14 @@ $query = $db->query("SELECT * FROM `product`  WHERE `status` <> '99'  ORDER BY `
     <div class="card-body p-5">
         <div class="row no-gutters">
             <div class="col-md-8 order-md-1 mb-2 ">
-                <h5 class="text-md-start text-center mb-0"><i class="fadeIn animated bx bx-box"></i> จัดการข้อมูลสินค้า</h5>
+                <h5 class="text-md-start text-center mb-0"><i class="fadeIn animated bx bx-grid-alt"></i> จัดการข้อมูลตำแหน่งสมาชิก</h5>
             </div>
             <div class="col-md-4 order-md-2">
                 <div class="text-md-end text-center">
                     <button type="button" class="btn btn-primary align-items-center" id="add">
                         <i class="fadeIn animated bx bx-plus"></i>
                         &nbsp;
-                        เพิ่มข้อมูลสินค้า
+                        เพิ่มข้อมูลตำแหน่งสมาชิก
                     </button>
                 </div>
             </div>
@@ -41,12 +39,7 @@ $query = $db->query("SELECT * FROM `product`  WHERE `status` <> '99'  ORDER BY `
                 <thead>
                     <tr class="text-nowrap bg-warning">
                         <th class="text-center">ลำดับ</th>
-                        <th class="text-nowrap">รหัสสินค้า</th>
-                        <th class="text-nowrap">ประเภทสินค้า</th>
-                        <th class="text-nowrap">ชื่อสินค้า</th>
-                        <th class="text-nowrap">ราคา</th>
-                        <th class="text-nowrap">ราคาสมาชิก</th>
-                        <th class="text-nowrap">PV</th>
+                        <th class="text-nowrap">ชื่อตำแหน่ง</th>
                         <th class="text-center">สถานะ</th>
                         <th class="text-center"><i class="fas fa-cog"></i></th>
                     </tr>
@@ -56,18 +49,12 @@ $query = $db->query("SELECT * FROM `product`  WHERE `status` <> '99'  ORDER BY `
                     $i=0;
                     foreach($query->getResult('array') as $row){ 
                         $i++;
-                        $btype = $fc->productTypeID($row['type_id']);
                     ?>
                     <tr>
                         <td class="text-center align-middle"><?=$i?></td>
-                        <td class="text-nowarp align-middle"><?=esc($row['product_code'])?></td>
-                        <td class="text-nowarp align-middle"><?=esc($btype['type_name'])?></td>
-                        <td class="text-nowarp align-middle"><?=esc($row['product_name'])?></td>
-                        <td class="text-nowarp align-middle"><?=number_format($row['price'],2)?></td>
-                        <td class="text-nowarp align-middle"><?=number_format($row['price_member'],2)?></td>
-                        <td class="text-nowarp align-middle"><?=number_format($row['pv'],2)?></td>
+                        <td class="text-nowarp align-middle"><?=esc($row['position_name'])?></td>
                         <td class="text-nowrap">
-                            <select class="form-select <?=$row['status'] =="1"?"bg-success":"bg-danger"?> text-white" id="status" name="status" TypeID="<?=esc($row['product_id'])?>">
+                            <select class="form-select <?=$row['status'] =="1"?"bg-success":"bg-danger"?> text-white" id="status" name="status" TypeID="<?=esc($row['position_id'])?>">
                                 <option value="0" <?=$row['status'] == "0"?"selected='selected'":""?>>ปิดใช้งาน</option>
                                 <option value="1" <?=$row['status'] == "1"?"selected='selected'":""?>>เปิดใช้งาน
                                 </option>
@@ -77,16 +64,16 @@ $query = $db->query("SELECT * FROM `product`  WHERE `status` <> '99'  ORDER BY `
                             <button class="btn btn-outline-secondary dropdown-toggle bg-info" type="button"
                                 data-bs-toggle="dropdown" aria-expanded="false"><i class="lni lni-cog"></i></button>
                             <ul class="dropdown-menu">
-                                <li> <a class="dropdown-item text-dark ControlDesc" tID="<?=esc($row['product_id'])?>"
+                                <li> <a class="dropdown-item text-dark ControlDesc" tID="<?=esc($row['position_id'])?>"
                                         st="<?=$row['status']?>" href="javascript:;"><i
                                             class="fadeIn animated bx bx-detail"></i>&nbsp;
                                         รายละเอียด</a>
                                 </li>
                                 <hr />
-                                <li> <a class="dropdown-item text-warning ControlEdit" tID="<?=esc($row['product_id'])?>"
+                                <li> <a class="dropdown-item text-warning ControlEdit" tID="<?=esc($row['position_id'])?>"
                                         href="javascript:;"><i class="fadeIn animated bx bx-edit"></i>&nbsp;แก้ไขข้อมูล</a>
                                 </li>
-                                <li> <a class="dropdown-item text-danger ControlDelete" tID="<?=esc($row['product_id'])?>"
+                                <li> <a class="dropdown-item text-danger ControlDelete" tID="<?=esc($row['position_id'])?>"
                                         st="<?=$row['status']?>" href="javascript:;"><i
                                             class="fadeIn animated bx bx-eraser"></i>&nbsp;
                                         ลบข้อมูล</a></a>
@@ -109,7 +96,7 @@ $query = $db->query("SELECT * FROM `product`  WHERE `status` <> '99'  ORDER BY `
 $(document).ready(function() {
     $('#add').click(function(e) {
         e.preventDefault();
-        $.post("./component/product/form", (data) => {
+        $.post("./component/memberposition/form", (data) => {
             $('#contentData').html(data);
         }, "html");
     });
@@ -129,7 +116,7 @@ $(document).ready(function() {
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                $.post("./component/product/process", {
+                $.post("./component/memberposition/process", {
                         even: 'del',
                         id: id,
                         st: st
@@ -144,7 +131,7 @@ $(document).ready(function() {
                                 showConfirmButton: false,
                                 timer: 1500
                             }).then(function() {
-                                $.post("./component/product/list", (data) => {
+                                $.post("./component/memberposition/list", (data) => {
                                     $('#contentData').html(data);
                                 }, "html");
                             });
@@ -166,7 +153,7 @@ $(document).ready(function() {
         e.preventDefault();
         let id = $(this).attr('tID');
         var even = 'desc';
-        $.post("./component/product/description", {
+        $.post("./component/memberposition/description", {
             even: even,
             id: id
         }, (data) => {
@@ -178,7 +165,7 @@ $(document).ready(function() {
         e.preventDefault();
         let id = $(this).attr('tID');
         var even = 'edit';
-        $.post("./component/product/form", {
+        $.post("./component/memberposition/form", {
             even: even,
             id: id
         }, (data) => {
@@ -190,7 +177,7 @@ $(document).ready(function() {
         e.preventDefault();
         let id = $(this).attr('TypeID');
         let value = $(this).val();
-        $.post("./component/product/process", {
+        $.post("./component/memberposition/process", {
                 id: id,
                 value: value,
                 even: 'editstatus'
@@ -204,7 +191,7 @@ $(document).ready(function() {
                         showConfirmButton: false,
                         timer: 1500
                     }).then(function() {
-                        $.post("./component/product/list", (data) => {
+                        $.post("./component/memberposition/list", (data) => {
                             $('#contentData').html(data);
                         }, "html");
                     });
