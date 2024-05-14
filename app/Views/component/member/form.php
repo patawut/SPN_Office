@@ -60,7 +60,12 @@ $id = isset($_POST['id'])?$_POST['id']:'';
             </div>
 
             <div class="row">
-                <div id="showFormBank"></div>
+                <div class="col-12">
+                   <div id="showFormBank"></div>
+                </div>
+                <div class="col-12">
+                    <div id="showFormShipping"></div>
+                </div>
             </div>
     </div>
 </form>
@@ -110,9 +115,19 @@ $(document).ready(function() {
             },
             dataType: 'html'
         });
-       
-   //$.post("./component/member/form_member",(data)=> {  $('#showFormMember').html(data);},"html");
-   // $.post("./component/member/form_info",(data)=> {  $('#showFormInfo').html(data);},"html");
-  //  $.post("./component/member/form_desc",(data)=> {  $('#showFormBank').html(data);},"html");
+
+        var urls3 = ["./component/membershipping/main"];
+        $.ajax({
+            url: urls3 , // เปลี่ยนเส้นทางไปยังสคริปต์ที่จะตรวจสอบค่า
+            type: 'POST',
+            data: {
+                id: id,
+                even: "goShipping"
+            },
+            success: function(data) {
+                    $('#showFormShipping').html(data);
+            },
+            dataType: 'html'
+        });
 });
 </script>

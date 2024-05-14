@@ -17,10 +17,8 @@
     $bank_id='';
     $selected='';
     if ($even == "editBank"){
- 
         $query_bank = $db->query("SELECT * FROM `member_bank` WHERE `member_id` = ? " ,[$id]);
         $row_bank = $query_bank->getRow();
-    
             if($row_bank){
                 $bank_id = $row_bank->bank_id;
                 $numbank = $row_bank->numbank;
@@ -29,15 +27,13 @@
             }else{
                 $even = "addBank";
             }
-   
-            
       
     }
 ?>
 
 <form class="row g-3" id="formBank" method="post" enctype="multipart/form-data" name="formBank">
     <div class="card border-top border-0 border-4 border-danger">
-
+       
         <div class="row">
             <div class="col-12">
                     <input type="hidden" class="form-control" id="even" name="even" value="<?=$even?>">
@@ -51,6 +47,7 @@
                         </div>
                     </div>
                     <hr>
+                    
                     <div class="row">
                         <div class="col-12 mb-2">
                             <label class="form-label">ชื่อธนาคาร</label>
@@ -62,12 +59,12 @@
                                     aria-label="Example select with button addon">
                                     <option value="99">-- เลือกชื่อธนาคาร --</option>
                                     <?php
-                                                    foreach($cat3 as $cats3){
-                                                        if($even == "desc") {$selected = $cats3->BankCode==$bank_id?"selected":"";} 
-                                                        echo $cats3->BankCode;
-                                                        echo '<option value="'.$cats3->BankCode.'" '.$selected.'>'.$cats3->bankNameTh.'</option>';
-                                                    } 
-                                                ?>
+                                        foreach($cat3 as $cats3){
+                                            if($even == "editBank") {$selected = $cats3->BankCode==$bank_id?"selected":"";} 
+                                                echo $cats3->BankCode;
+                                                echo '<option value="'.$cats3->BankCode.'" '.$selected.'>'.$cats3->bankNameTh.'</option>';
+                                        } 
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -108,6 +105,7 @@
                             </div>
                             <input type="hidden" name="photourl2" id="photourl2" value="<?=$photo2?>">
                         </div>
+                        <br>
                         <div class="col-12">
                             <div class="text-center">
                                 <button type="button" class="btn btn-danger btn_back4" id="btn_back4"><i
