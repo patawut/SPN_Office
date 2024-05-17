@@ -4,6 +4,7 @@ $id = isset($_POST['id']) ? $_POST['id'] : '';
 $st = isset($_POST['st']) ? $_POST['st'] : '';
 $even = isset($_POST['even']) ? $_POST['even'] : '';
 $tid= isset($_POST['tid']) ? $_POST['tid'] : '';
+$sid= isset($_POST['sid']) ? $_POST['sid'] : '';
 $infoid= isset($_POST['infoid']) ? $_POST['infoid'] : '';
 $nobankid= isset($_POST['nobankid']) ? $_POST['nobankid'] : '';
 
@@ -183,10 +184,10 @@ if ($even == "editBank"){
             'even' => 'editBank', 
         ];
         //typeRegister
-        $sql_info = "UPDATE `member_bank` SET `bank_id` = ?,`numbank` = ?, `bookbank_photo` = ?  WHERE `member_id` = ?";
-        $query_info = $db->query($sql_info, [$bank_id, $numbank, $account_name, $photourl2,$nobankid]);
+        $sql_bank_edit = "UPDATE `member_bank` SET `bank_id`= ? , `numbank` = ?,`account_name` = ? ,`bookbank_photo` = ?  WHERE `member_id` = ?";
+        $query_bank_edit = $db->query($sql_bank_edit, [$bank_id, $numbank, $account_name, $photourl2,$nobankid]);
 
-            if ($query_info) {
+            if ($query_bank_edit) {
                 $response['status']=1;
                 $response['msg']='บันทึกข้อมูลสำเร็จ';
             } else {
@@ -474,3 +475,5 @@ if ($even == "dela") {
     }
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
+
+
