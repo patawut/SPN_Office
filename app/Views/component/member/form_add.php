@@ -92,7 +92,7 @@
                                 <div class="input-group"> <span class="input-group-text bg-transparent"><i
                                             class='fadeIn animated bx bx-user-circle'></i></span>
                                     <input type="text" class="form-control border-start-0" id="profile_id"
-                                        name="profile_id" value="<?=$profile_id?>" required />
+                                        name="profile_id" value="<?=$profile_id?>"  />
                                 </div>
                             </div>
                             <div class="col-12">
@@ -101,7 +101,7 @@
                                             class='fadeIn animated bx bx-key'></i></span>
                                     <input type="text" class="form-control border-start-0" id="password" name="password"
                                         placeholder="กรุณากรอกรหัสผ่าน"
-                                        <?php if($even == "add"){ echo "required"; }else{   }?> />
+                                        <?php if($even == "add"){ echo ""; }else{   }?> />
                                 </div>
 
                                 <?php if($even == "edit"){  ?> <small class="text-danger">*
