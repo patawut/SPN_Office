@@ -68,7 +68,7 @@
                                 <div class="input-group"> <span class="input-group-text bg-transparent"><i
                                             class='fadeIn animated bx bx-user-circle'></i></span>
                                     <input type="text" class="form-control border-start-0" id="profile_id"
-                                        name="profile_id" value="<?=$profile_id?>" required />
+                                        name="profile_id" value="<?=$profile_id?>"  />
                                 </div>
                             </div>
                             <div class="col-12">
@@ -91,7 +91,7 @@
                                 <div class="input-group"> <span class="input-group-text bg-transparent"><i
                                             class='fadeIn animated bx bx-user-circle'></i></span>
                                     <input type="text" class="form-control border-start-0" id="name" name="name"
-                                        value="<?=$name?>" required />
+                                        value="<?=$name?>"/>
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
@@ -118,7 +118,7 @@
                                 <div class="input-group"> <span class="input-group-text bg-transparent"><i
                                             class='fadeIn animated bx bx-phone-call'></i></span>
                                     <input type="number" class="form-control border-start-0" id="telephone"
-                                        name="telephone" value="<?=$telephone?>" required />
+                                        name="telephone" value="<?=$telephone?>"  />
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
@@ -126,7 +126,7 @@
                                 <div class="input-group"> <span class="input-group-text bg-transparent"><i
                                             class='fadeIn animated bx bx-mail-send'></i></span>
                                     <input type="email" class="form-control border-start-0" id="email" name="email"
-                                        value="<?=$email?>" required />
+                                        value="<?=$email?>"  />
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
@@ -134,7 +134,7 @@
                                 <div class="input-group"> <span class="input-group-text bg-transparent"><i
                                             class='fadeIn animated bx bx-globe'></i></span>
                                     <input type="text" class="form-control border-start-0" id="line" name="line"
-                                        value="<?=$line?>" required />
+                                        value="<?=$line?>"  />
                                 </div>
                             </div>
                             <div class="col-md-12 mb-2">
