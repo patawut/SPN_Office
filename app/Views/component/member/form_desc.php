@@ -7,7 +7,39 @@ $cat3 = $fc2->bankTypeList($db);
 $even = isset($_POST['even'])?$_POST['even']:'edit';
 $id = isset($_POST['id'])?$_POST['id']:'';
 $selected='';
-$note='';
+$note=''; 
+$email='';
+$line='';
+$name='';
+$telephone='';
+$password='';
+$profile_id='';
+$selected='';
+$position_id='';
+$photourl='';
+$showPhotoE='';
+$photo='';
+$status='';
+
+$photourl2='';
+$showPhotoE12='';
+$photo2='';
+$account_name='';
+$numbank='';
+$bank_id='';
+
+$photourl1='';
+$showPhotoE1='';
+$photo1='';
+$firstname='';
+$lastname='';
+$idcard='';
+$birthday='';
+$address='';
+$zipcode='';
+
+
+
     if ($even == "desc"){
         $query = $db->query("SELECT * FROM `member` WHERE `member_id` = ? " ,[$id]);
         $row = $query->getRow();
@@ -56,7 +88,8 @@ $note='';
             <div class="row">
                 <input type="hidden" class="form-control" id="even" name="even" value="<?=$even?>">
                 <input type="hidden" class="form-control" id="id" name="id" value="<?=$id?>">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+
                     <?php
                         $query = $db->query("SELECT * FROM `member` WHERE `member_id` = ? " ,[$id]);
                         $row = $query->getRow();   
@@ -78,7 +111,7 @@ $note='';
                         <div class="card border-top border-0 border-4 border-warning">
                             <div class="card-body p-5">
                                 <div class="row no-gutters">
-                                    <div class="col-md-8 order-md-1 mb-2 ">
+                                    <div class="col-md-3 order-md-1 mb-2 ">
                                         <h5 class="text-md-start text-center mb-0"> <i
                                                 class="fadeIn animated bx bx-user-plus"></i>
                                             ข้อมูลสมาชิก
@@ -86,97 +119,45 @@ $note='';
                                     </div>
                                 </div>
                                 <hr>
+                                <input type="hidden" class="form-control" id="even" name="even" value="<?=$even?>">
+                                <input type="hidden" class="form-control" id="tid" name="tid" value="<?=$id?>">
                                 <div class="row">
-                                    <div class="col-12">
-                                        <input type="hidden" class="form-control" id="even" name="even"
-                                            value="<?=$even?>">
-                                        <input type="hidden" class="form-control" id="tid" name="tid" value="<?=$id?>">
-
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="col-12 mb-2">
-                                                    <label for="profile_id" class="form-label">ID</label>
-                                                    <div class="input-group"> <span
-                                                            class="input-group-text bg-transparent"><i
-                                                                class='fadeIn animated bx bx-user-circle'></i></span>
-                                                        <input type="text" class="form-control border-start-0"
-                                                            id="profile_id" name="profile_id"
-                                                            value="<?=$profile_id?>" disabled/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <label for="password" class="form-label">Password</label>
-                                                    <div class="input-group"> <span
-                                                            class="input-group-text bg-transparent"><i
-                                                                class='fadeIn animated bx bx-key'></i></span>
-                                                        <input type="text" class="form-control border-start-0"
-                                                            id="password" name="password"
-                                                            placeholder="กรุณากรอกรหัสผ่าน"
-                                                            <?php if($even == "editMem"){  }else{  echo "required";  }?> disabled/>
-                                                    </div>
-
-                                                    <?php if($even == "editMem"){  ?> <small class="text-danger">*
-                                                        ถ้าไม่เปลี่ยนรหัสผ่านไม่ต้องกรอกข้้อมูลใดๆๆลงช่องกรอกนี้้
-                                                        *</small><?php }else{ ?><small class="text-danger">*
-                                                        กรุณากรอกเป็นภาษาอังกฤษพร้อมตัวเลข เพื่อป้องกันการเข้าถึง
-                                                        *</small><?php } ?>
+                                                    <h6><b>ID</b> :
+                                                        <?php if($profile_id == NULL){ echo "-";}else{ echo $profile_id;} ?>
+                                                    </h6>
                                                 </div>
                                                 <div class="col-12 mb-2">
-                                                    <label for="name" class="form-label">ชื่อสมาชิก</label>
-                                                    <div class="input-group"> <span
-                                                            class="input-group-text bg-transparent"><i
-                                                                class='fadeIn animated bx bx-user-circle'></i></span>
-                                                        <input type="text" class="form-control border-start-0" id="name"
-                                                            name="name" value="<?=$name?>"
-                                                            disabled />
-                                                    </div>
+                                                    <h6><b>ระดับสมาชิก</b> :
+                                                        <?php if($name == NULL){ echo "-";}else{ echo $name;} ?></h6>
                                                 </div>
                                                 <div class="col-12 mb-2">
-                                                    <label class="form-label">ระดับสมาชิก</label>
-                                                    <div class="input-group">
-                                                        <button class="btn btn-outline-secondary" type="button"><i
-                                                                class='fadeIn animated bx bx-buildings'></i>
-                                                        </button>
-                                                        <select class="form-select single-select" id="position_id"
-                                                            name="position_id"
-                                                            aria-label="Example select with button addon" disabled>
-                                                            <option value="99">-- เลือกระดับสมาชิก --</option>
-                                                            <?php
-                                                        foreach($cat2 as $cats2){
-                                                            if($even == "desc") {$selected = $cats2->position_id==$position_id?"selected":"";}
-                                                                echo $cats2->position_id;
-                                                                echo '<option value="'.$cats2->position_id.'" '.$selected.'>'.$cats2->position_name.'</option>';
-                                                            } 
-                                                        ?>
-                                                        </select>
-                                                    </div>
+                                                    <?php
+                                                        foreach($cat2 as $cats2){ 
+                                                            if($cats2->position_id==$position_id){
+                                                              ?>
+                                                     <?=$cats2->position_name?>
+                                                    <?php
+                                                                }
+                                                    ?>
+                                                    <?php
+                                                        } 
+                                                    ?>
+                                                    </h6>
                                                 </div>
                                                 <div class="col-12 mb-2">
-                                                    <label for="telephone" class="form-label">เบอร์โทรศัพท์</label>
-                                                    <div class="input-group"> <span
-                                                            class="input-group-text bg-transparent"><i
-                                                                class='fadeIn animated bx bx-phone-call'></i></span>
-                                                        <input type="number" class="form-control border-start-0"
-                                                            id="telephone" name="telephone" value="<?=$telephone?>" disabled />
-                                                    </div>
+                                                    <h6><b>เบอร์โทรศัพท์</b> : <?=$telephone?></h6>
                                                 </div>
                                                 <div class="col-12 mb-2">
-                                                    <label for="email" class="form-label">อีเมล์</label>
-                                                    <div class="input-group"> <span
-                                                            class="input-group-text bg-transparent"><i
-                                                                class='fadeIn animated bx bx-mail-send'></i></span>
-                                                        <input type="email" class="form-control border-start-0"
-                                                            id="email" name="email" value="<?=$email?>" disabled />
-                                                    </div>
+                                                    <h6><b>อีเมล์</b> :
+                                                        <?php if($email == NULL){ echo "-";}else{ echo $email;} ?></h6>
                                                 </div>
                                                 <div class="col-12 mb-2">
-                                                    <label for="line" class="form-label">Line</label>
-                                                    <div class="input-group"> <span
-                                                            class="input-group-text bg-transparent"><i
-                                                                class='fadeIn animated bx bx-globe'></i></span>
-                                                        <input type="text" class="form-control border-start-0" id="line"
-                                                            name="line" value="<?=$line?>" disabled />
-                                                    </div>
+                                                    <h6><b>Line</b> :
+                                                        <?php if($line == NULL){ echo "-";}else{ echo $line;} ?></h6>
                                                 </div>
                                                 <div class="col-md-12 mb-2">
                                                     <div class="form-group">
@@ -184,123 +165,61 @@ $note='';
                                                                 class="fadeIn animated bx bx-images"></i>
                                                             รูปภาพสมาชิก</label>
                                                         <br>
-                                                        <div class="col-4" id="showPhoto"> </div>
                                                         <div class="col-4" id="showPhotoE">
                                                             <?php if($photo == ""){ }else{ ?> <img
                                                                 src="<?=$_ENV['FileService']?>photo/<?=$photo?>"
-                                                                width="50%" height="50%"><?php } ?>
+                                                                width="100%" height="100%"><?php } ?>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <?php
-                    $query_info = $db->query("SELECT * FROM `member_info` WHERE `member_id` = ? " ,[$id]);
-                    $row_info = $query_info->getRow();
-                    if($row_info){
-                        $idcard = $row_info->idcard;
-                        $firstname = $row_info->firstname;
-                        $lastname = $row_info->lastname;
-                        $birthday = $row_info->birthday;
-                        $zipcode = $row_info->zipcode;
-                        $photo1 = $row_info->idcard_photo;
-                        $address = $row_info->address;
-                    }
-                    ?>
-
-                    <form class="row g-3" id="formInfo" method="post" enctype="multipart/form-data" name="formInfo">
-                        <div class="card border-top border-0 border-4 border-info">
-                            <div class="card-body p-5">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="row no-gutters">
-                                            <div class="col-md-8 order-md-1 mb-2 ">
-                                                <h5 class="text-md-start text-center mb-0"> <i
-                                                        class="fadeIn animated bx bx-user-circle"></i>
-                                                    รายละเอียดข้อมูลสมาชิก
-
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <input type="hidden" class="form-control" id="even" name="even"
-                                            value="<?=$even?>">
-                                        <input type="hidden" class="form-control" id="infoid" name="infoid"
-                                            value="<?=$id?>">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <?php
+                                        $query_info = $db->query("SELECT * FROM `member_info` WHERE `member_id` = ? " ,[$id]);
+                                        $row_info = $query_info->getRow();
+                                        if($row_info){
+                                            $idcard = $row_info->idcard;
+                                            $firstname = $row_info->firstname;
+                                            $lastname = $row_info->lastname;
+                                            $birthday = $row_info->birthday;
+                                            $zipcode = $row_info->zipcode;
+                                            $photo1 = $row_info->idcard_photo;
+                                            $address = $row_info->address;
+                                        }
+                                        ?>
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="col-12 mb-2">
-                                                    <label for="firstname" class="form-label">ชื่อ
-                                                        (ตามบัตรประชาชน)</label>
-                                                    <div class="input-group"> <span
-                                                            class="input-group-text bg-transparent"><i
-                                                                class='fadeIn animated bx bx-user-circle'></i></span>
-                                                        <input type="text" class="form-control border-start-0"
-                                                            id="firstname" name="firstname" value="<?=$firstname?>"
-                                                            disabled />
-                                                    </div>
+                                                    <h6><b>ชื่อ - นามสกุล (ตามบัตรประชาชน)</b> :
+                                                        <?php if($firstname == NULL && $lastname == NULL){ echo "-";}else{ echo "คุณ $firstname $lastname";} ?>
+                                                    </h6>
                                                 </div>
                                                 <div class="col-12 mb-2">
-                                                    <label for="lastname" class="form-label">นามสกุล
-                                                        (ตามบัตรประชาชน)</label>
-                                                    <div class="input-group"> <span
-                                                            class="input-group-text bg-transparent"><i
-                                                                class='fadeIn animated bx bx-user-circle'></i></span>
-                                                        <input type="text" class="form-control border-start-0"
-                                                            id="lastname" name="lastname" value="<?=$lastname?>"
-                                                            disabled />
-                                                    </div>
+                                                    <h6><b>เลขบัตรประชาชน</b> :
+                                                        <?php if($idcard == NULL){ echo "-";}else{ echo $idcard;} ?>
+                                                    </h6>
                                                 </div>
                                                 <div class="col-12 mb-2">
-                                                    <label for="idcard" class="form-label">เลขบัตรประชาชน</label>
-                                                    <div class="input-group"> <span
-                                                            class="input-group-text bg-transparent"><i
-                                                                class='fadeIn animated bx bx-id-card'></i></span>
-                                                        <input type="number" class="form-control border-start-0"
-                                                            id="idcard" name="idcard" value="<?=$idcard?>" disabled />
-                                                    </div>
+                                                    <h6><b>วัน/เดือน/ปีเกิด</b> :
+                                                        <?php if($birthday == NULL){ echo "-";}else{ echo $birthday;} ?>
+                                                    </h6>
                                                 </div>
                                                 <div class="col-12 mb-2">
-                                                    <label for="birthday" class="form-label">วัน/เดือน/ปีเกิด</label>
-                                                    <div class="input-group"> <span
-                                                            class="input-group-text bg-transparent"><i
-                                                                class='fadeIn animated bx bx-cake'></i></span>
-                                                        <input type="date" class="form-control border-start-0"
-                                                            id="birthday" name="birthday" value="<?=$birthday?>"
-                                                            disabled />
-                                                    </div>
+                                                    <h6><b>ที่อยู่</b> :
+                                                        <?php if($address == NULL){ echo "-";}else{ echo $address;} ?>
+                                                    </h6>
                                                 </div>
                                                 <div class="col-12 mb-2">
-                                                    <label for="address" class="form-label">ที่อยู่</label>
-                                                    <div class="input-group"> <span
-                                                            class="input-group-text bg-transparent"><i
-                                                                class='fadeIn animated bx bx-target-lock'></i></span>
-                                                        <input type="text" class="form-control border-start-0"
-                                                            id="address" name="address" value="<?=$address?>"
-                                                            disabled />
-                                                    </div>
+                                                    <h6><b>รหัสไปรษณีย์</b> :
+                                                        <?php if($zipcode == NULL){ echo "-";}else{ echo $zipcode;} ?>
+                                                    </h6>
                                                 </div>
                                                 <div class="col-12 mb-2">
-                                                    <label for="zipcode" class="form-label">รหัสไปรษณีย์</label>
-                                                    <div class="input-group"> <span
-                                                            class="input-group-text bg-transparent"><i
-                                                                class='fadeIn animated bx bx-pin'></i></span>
-                                                        <input type="number" class="form-control border-start-0"
-                                                            id="zipcode" name="zipcode" value="<?=$zipcode?>"
-                                                            disabled />
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 mb-2">
-                                                    <label for="note" class="form-label">รายละเอียด</label>
-                                                    <textarea id="summernote" class="form-control" rows="3"
-                                                        name="note" ><?=$note?></textarea>
+                                                    <h6><b>รายละเอียด</b> :
+                                                        <?php if($note == NULL){ echo "-";}else{ echo $note;} ?>
+                                                    </h6>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-2">
@@ -309,93 +228,51 @@ $note='';
                                                             class="fadeIn animated bx bx-images"></i>
                                                         รูปภาพบัตรประชาชน</label>
                                                     <br>
-                                                    <div class="col-4" id="showPhoto1"> </div>
-                                                    <?php // if($even=="edit"){?>
                                                     <div class="col-4" id="showPhotoE1">
                                                         <?php if($photo1 == ""){ }else{ ?> <img
                                                             src="<?=$_ENV['FileService']?>photo/<?=$photo1?>"
-                                                            width="50%" height="50%"><?php } ?>
+                                                            width="100%" height="100%"><?php } ?>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <?php
-                    $query_bank = $db->query("SELECT * FROM `member_bank` WHERE `member_id` = ? " ,[$id]);
-                    $row_bank = $query_bank->getRow();
-                    if($row_bank){
-                        $bank_id = $row_bank->bank_id;
-                        $numbank = $row_bank->numbank;
-                        $account_name = $row_bank->account_name;
-                        $photo2 = $row_bank->bookbank_photo;
-                    }
-                    ?>
-
-                    <form class="row g-3" id="formBank" method="post" enctype="multipart/form-data" name="formBank">
-                        <div class="card border-top border-0 border-4 border-danger">
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="hidden" class="form-control" id="even" name="even" value="<?=$even?>">
-                                    <input type="hidden" class="form-control" id="nobankid" name="nobankid"
-                                        value="<?=$id?>">
-                                    <div class="card-body p-5">
-                                        <div class="row no-gutters">
-                                            <div class="col-md-8 order-md-1 mb-2 ">
-                                                <h5 class="text-md-start text-center mb-0"> <i
-                                                        class="fadeIn animated bx bx-buildings"></i>
-                                                    ข้อมูลบัญชีธนาคาร
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <hr>
-
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <?php
+                                        $query_bank = $db->query("SELECT * FROM `member_bank` WHERE `member_id` = ? " ,[$id]);
+                                        $row_bank = $query_bank->getRow();
+                                        if($row_bank){
+                                            $bank_id = $row_bank->bank_id;
+                                            $numbank = $row_bank->numbank;
+                                            $account_name = $row_bank->account_name;
+                                            $photo2 = $row_bank->bookbank_photo;
+                                        }
+                                        ?>
                                         <div class="row">
                                             <div class="col-12 mb-2">
-                                                <label class="form-label">ชื่อธนาคาร</label>
-                                                <div class="input-group">
-                                                    <button class="btn btn-outline-secondary" type="button"><i
-                                                            class='fadeIn animated bx bx-buildings'></i>
-                                                    </button>
-                                                    <select class="form-select single-select" id="bank_id"
-                                                        name="bank_id" aria-label="Example select with button addon" disabled>
-                                                        <option value="99">-- เลือกชื่อธนาคาร --</option>
-                                                        <?php
-                                                            foreach($cat3 as $cats3){
-                                                                if($even == "desc") {$selected = $cats3->BankCode==$bank_id?"selected":"";} 
-                                                                    echo $cats3->BankCode;
-                                                                    echo '<option value="'.$cats3->BankCode.'" '.$selected.'>'.$cats3->bankNameTh.'</option>';
-                                                            } 
-                                                        ?>
-                                                    </select>
-                                                </div>
+                                                <h6><b>ชื่อธนาคาร</b> :
+                                                    <?php
+                                                        foreach($cat3 as $cats3){ 
+                                                            if($cats3->BankCode==$bank_id){
+                                                              ?>
+                                                    <?=$cats3->bankNameTh?>
+                                                    <?php
+                                                            }
+                                                    ?>
+                                                    <?php
+                                                        } 
+                                                    ?>
+                                                </h6>
                                             </div>
                                             <div class="col-12 mb-2">
-                                                <label for="account_name" class="form-label">ชื่อบัญชี</label>
-                                                <div class="input-group"> <span
-                                                        class="input-group-text bg-transparent"><i
-                                                            class='fadeIn animated bx bx-credit-card-front'></i></span>
-                                                    <input type="text" class="form-control border-start-0"
-                                                        id="account_name" name="account_name" value="<?=$account_name?>"
-                                                        disabled />
-                                                </div>
+                                                <h6><b>ชื่อบัญชี</b> :
+                                                    <?php if($account_name == NULL){ echo "-";}else{ echo $account_name;} ?>
+                                                </h6>
                                             </div>
                                             <div class="col-12 mb-2">
-                                                <label for="numbank" class="form-label">เลขที่บัญชี</label>
-                                                <div class="input-group"> <span
-                                                        class="input-group-text bg-transparent"><i
-                                                            class='fadeIn animated bx bx-credit-card-front'></i></span>
-                                                    <input type="text" class="form-control border-start-0" id="numbank"
-                                                        name="numbank" value="<?=$numbank?>" disabled />
-                                                </div>
+                                                <h6><b>เลขที่บัญชี</b> :
+                                                    <?php if($numbank == NULL){ echo "-";}else{ echo $numbank;} ?>
+                                                </h6>
                                             </div>
                                             <div class="col-md-12 mb-2">
                                                 <div class="form-group">
@@ -403,12 +280,11 @@ $note='';
                                                             class="fadeIn animated bx bx-images"></i>
                                                         รูปภาพสมุดบัญชี</label>
                                                     <br>
-                                                    <div class="col-4" id="showPhoto2"> </div>
                                                     <?php // if($even=="edit"){?>
                                                     <div class="col-4" id="showPhotoE2">
                                                         <?php if($photo2 == ""){ }else{ ?> <img
                                                             src="<?=$_ENV['FileService']?>photo/<?=$photo2?>"
-                                                            width="50%" height="50%"><?php } ?>
+                                                            width="100%" height="100%"><?php } ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -419,9 +295,8 @@ $note='';
                         </div>
                     </form>
                 </div>
-                <div class="col-12">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <div class="card border-top border-0 border-4 border-danger">
-
                         <div class="row">
                             <div class="col-12">
                                 <div class="card-body p-5">
@@ -474,11 +349,19 @@ $note='';
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                   
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                    
+                </div>
+            </div>
         </div>
 </form>
 
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
     $('#btn_back1').click(function(e) {
         e.preventDefault();
         $.post("./component/member/viewlist", (data) => {
