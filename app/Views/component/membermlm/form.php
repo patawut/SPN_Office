@@ -161,12 +161,6 @@ if(!empty($row_mlm)){
     ?>
 </div>
 
-<div class="modal fade" id="memberModal" tabindex="-1" aria-labelledby="memberModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-dialog-centered">
-        <div class="modal-content " id="memberModal_content">
-        </div>
-    </div>
-</div>
 <script>
 $(document).ready(function() {
 

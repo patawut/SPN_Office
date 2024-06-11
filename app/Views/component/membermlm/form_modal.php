@@ -67,12 +67,13 @@ $(document).ready(function() {
                         showConfirmButton: false,
                         timer: 1500
                     }).then(function() {
+                        
                         $.post("./component/membermlm/view", (data) => {
-                            $('#showform').html(data);
-                            $('#memberModal_content').html('close');
-                           
+                            
                             $('#memberModal').modal('hide');
-                            $('.modal-backdrop').remove();
+                            $('#memberModal_content').html('close');  
+                            $('#showform').html(data);
+                            //$('.modal-backdrop').remove();
                         }, "html");
                     });
                 } else {
