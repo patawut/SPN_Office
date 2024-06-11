@@ -42,7 +42,8 @@ $profile_ck=isset($_POST['profile_ck']) ? $_POST['profile_ck'] : '';
 $idcard_ck=isset($_POST['idcard_ck']) ? $_POST['idcard_ck'] : '';
 $numbank_ck=isset($_POST['numbank_ck']) ? $_POST['numbank_ck'] : '';
 
-
+$position_mlm_id=isset($_POST['position_mlm_id']) ? $_POST['position_mlm_id'] : '';
+$mmid=isset($_POST['mmid']) ? $_POST['mmid'] : '';
 
 
 
@@ -625,3 +626,25 @@ if ($even == "dela") {
 }
 
 
+
+if($even == "addM"){
+    $response = [
+        'even' => 'addM', 
+    ];
+    if($position_mlm_id != '99'){
+      $sql_mlm = "INSERT INTO `member_mlm` (`node_id`, `member_id`, `left_id`, `right_id`, `left_pv`, `right_pv`, `guild_id`, `upline_id`, `position_mlm_id`, `num_guild`, `num_team`, `upline_list`, `status`) VALUES (NULL, ?, NULL, NULL, ?, ?, NULL, NULL, ?, ?, ?, NULL, ?)";
+        $query_mlm = $db->query($sql_mlm, [$mmid,'0','0',$position_mlm_id,'0','0', 1]);
+
+        if ($query_mlm) {
+            $response['status']=1;
+            $response['msg']='บันทึกข้อมูลสำเร็จ';
+        } else {
+            $response['status']=0;
+            $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+        }
+    }else{
+        $response['status'] = 0;
+        $response['msg'] = 'กรุณาเลือกระดับสมาชิก';
+    }
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
