@@ -36,7 +36,7 @@ $id = isset($_POST['id'])?$_POST['id']:'';
                                 ttID="<?=esc($row['member_shopping_id'])?>" tID="<?=$id?>" href="javascript:;"><i
                                     class="fadeIn animated bx bx-edit"></i>&nbsp;แก้ไขข้อมูล</a>
                         </li>
-                        <li> <a class="dropdown-item text-danger ControlDelete" ttID="<?=esc($row['member_id'])?>"
+                        <li> <a class="dropdown-item text-danger ControlDelete" ttID="<?=esc($row['member_shopping_id'])?>"
                                 st="<?=$row['status']?>" href="javascript:;"><i
                                     class="fadeIn animated bx bx-eraser"></i>&nbsp;
                                 ลบข้อมูล</a></a>
@@ -68,9 +68,9 @@ $(document).ready(function() {
 
     $('.ControlDelete').click(function(e) {
         e.preventDefault();
-        console.log('del');
-        let id = $(this).attr('tID');
-        console.log(id);
+        //console.log('del');
+        let id = $(this).attr('ttID');
+        //console.log(id);
         Swal.fire({
             title: 'คุณต้องการเปลี่ยนสถานะใช่หรือไม่?',
             showDenyButton: true,
@@ -91,7 +91,12 @@ $(document).ready(function() {
                                 title: 'ลบเรียบร้อยแล้ว',
                                 showConfirmButton: false,
                                 timer: 1500
-                            }).then(function() {});
+                            }).then(function() {
+                                $.post("./component/membershipping/viewlist", (data) => {
+                          //  $('#showform').html(data);
+                            $('#showlist').html(data);
+                        }, "html");
+                            });
                         } else {
                             Swal.fire({
                                 icon: 'error',

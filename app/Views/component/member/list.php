@@ -109,8 +109,8 @@ $(document).ready(function() {
     $('.ControlDesc').click(function(e) {
         e.preventDefault();
         let id = $(this).attr('tID');
-        var even = 'edit';
-        $.post("./component/member/form", {
+        var even = 'desc';
+        $.post("./component/member/form_desc", {
             even: even,
             id: id
         }, (data) => {
@@ -169,7 +169,7 @@ $(document).ready(function() {
         e.preventDefault();
         let id = $(this).attr('tID');
         var even = 'edit';
-        $.post("./component/member/form_add", {
+        $.post("./component/member/form", {
             even: even,
             id: id
         }, (data) => {

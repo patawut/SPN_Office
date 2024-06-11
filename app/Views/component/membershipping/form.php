@@ -104,7 +104,7 @@ $(document).ready(function() {
                         timer: 1500
                     }).then(function() {
                         $.post("./component/membershipping/viewlist", (data) => {
-                            $('#showform').html(data);
+                          //  $('#showform').html(data);
                             $('#showlist').html(data);
                         }, "html");
                     });

@@ -74,3 +74,16 @@ if($even == "addShipping"){
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
     
 }
+
+
+if ($even == "del") { 
+    $query = $db->query("UPDATE  `member_shipping` SET  `status` = 99  WHERE `member_shopping_id` = ?", [$id]);
+    if ($query) {
+        $response['status']=1;
+        $response['msg']='บันทึกข้อมูลสำเร็จ';
+    } else {
+        $response['status']=0;
+        $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+    }
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+}
