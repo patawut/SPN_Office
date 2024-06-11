@@ -312,7 +312,7 @@ $position='';
                     </form>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="card border-top border-0 border-4 border-danger">
+                    <div class="card border-top border-0 border-4 border-success">
                         <div class="row">
                             <div class="col-12">
                                 <div class="card-body p-5">
@@ -367,7 +367,7 @@ $position='';
             </div>
             <div class="row">
                 <div class="col-lg- col-md-6 col-sm-12 col-xs-12">
-                    <div class="card border-top border-0 border-4 border-success">
+                    <div class="card border-top border-0 border-4 border-danger">
                         <div class="row">
                             <div class="col-12">
                                 <div class="card-body p-5">
