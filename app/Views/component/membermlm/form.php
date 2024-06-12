@@ -34,7 +34,9 @@ if($row_mlm){
     $nameright = $fcMember->memberData($row_mlm->right_id);
     $num_guild = $row_mlm->num_guild;
     $num_team = $row_mlm->num_team;
+    $guild_id = $row_mlm->guild_id;
     $position = $fcM->PositionMlmTypeID($position_mlm_id);
+    $guild = $fcMember->memberData($guild_id);
 }
 if(!empty($row_mlm)){
 ?>
@@ -49,6 +51,22 @@ if(!empty($row_mlm)){
                         ?></h4>
                     </div>
                     <div class="widgets-icons bg-light-info text-info ms-auto"><i class="bx bx-crown"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="mb-0 text-secondary">ผู้แนะนำ</p>
+                        <h4 class="my-1">  <?php if ($guild_id != NULL) {  
+                                $name = isset($guild['name']) ? $guild['name'] : 'ไม่มีผู้แนะนำ'; 
+                                echo ' ( คุณ ' . $name . ' ) ';   }else{  echo "ไม่มีผู้แนะนำ"; } ?></h4>
+                    </div>
+                    <div class="widgets-icons bg-light-info text-info ms-auto"><i class="bx bx-user-pin"></i>
                     </div>
                 </div>
             </div>
@@ -120,7 +138,7 @@ if(!empty($row_mlm)){
                     <h4 class="my-1">
                         <?php if ($left_id != NULL) {  $convertedLeftID = $fc->convert10digit($row_mlm->left_id);
                                 $name = isset($nameleft['name']) ? $nameleft['name'] : 'ชื่อไม่พบ'; 
-                                echo $convertedLeftID;   }else{ echo "ไม่มีผู้แนะนำ"; } ?>
+                                echo $convertedLeftID;   }else{ echo "-"; } ?>
                     </h4>
                     <p class="mb-0 text-secondary"><?php if ($left_id != NULL) {  
                                 $name = isset($nameleft['name']) ? $nameleft['name'] : 'ชื่อไม่พบ'; 
@@ -140,7 +158,7 @@ if(!empty($row_mlm)){
                     <h4 class="my-1">
                         <?php if ($right_id != NULL) {  $convertedRightID = $fc->convert10digit($row_mlm->right_id);
                                 $name = isset($nameright['name']) ? $nameright['name'] : 'ชื่อไม่พบ'; 
-                                echo $convertedRightID;   }else{ echo "ไม่มีผู้แนะนำ"; } ?>
+                                echo $convertedRightID;   }else{ echo "-"; } ?>
                     </h4>
                     <p class="mb-0 text-secondary"><?php if ($right_id != NULL) {  
                                 $name = isset($nameright['name']) ? $nameright['name'] : 'ชื่อไม่พบ'; 
