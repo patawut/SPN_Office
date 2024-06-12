@@ -65,7 +65,7 @@
             </div>
             <div class="col-md-12">
                 <label for="note" class="form-label">รายละเอียด</label>
-                <textarea id="summernote" class="form-control"  rows="3" required><?=$note?></textarea>
+                <textarea id="summernote" class="form-control"  rows="3" ><?=$note?></textarea>
             </div>
             <div class="col-12">
                 <label class="form-label">ระดับการเข้าถึง</label>

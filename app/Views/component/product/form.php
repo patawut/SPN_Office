@@ -123,12 +123,12 @@
             <hr />
             <div class="col-md-12">
                 <label for="note_short" class="form-label">แบบสั้น</label>
-                <textarea id="summernote" class="form-control"  rows="3" name="note_short" required><?=$note_short?></textarea>
+                <textarea id="summernote" class="form-control"  rows="3" name="note_short" ><?=$note_short?></textarea>
             </div>
 
             <div class="col-md-12">
                 <label for="note" class="form-label">แบบยาว</label>
-                <textarea id="summernote1" class="form-control"  rows="3" name="note" required><?=$note?></textarea>
+                <textarea id="summernote1" class="form-control"  rows="3" name="note" ><?=$note?></textarea>
             </div>
             <hr />
             <div class="text-center"><h6><i class="fadeIn animated bx bx-image"></i> รูปภาพสินค้า</h6></div>
