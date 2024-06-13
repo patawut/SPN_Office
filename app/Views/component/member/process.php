@@ -5,6 +5,7 @@ $st = isset($_POST['st']) ? $_POST['st'] : '';
 $even = isset($_POST['even']) ? $_POST['even'] : '';
 $tid= isset($_POST['tid']) ? $_POST['tid'] : '';
 $sid= isset($_POST['sid']) ? $_POST['sid'] : '';
+$search_val= isset($_POST['search_val']) ? $_POST['search_val'] : '';
 $infoid= isset($_POST['infoid']) ? $_POST['infoid'] : '';
 $nobankid= isset($_POST['nobankid']) ? $_POST['nobankid'] : '';
 
@@ -70,21 +71,67 @@ if ($even == "search"){
             'even' => 'search', 
             'mname' => $mname,
         ];
-        $query_chk = $db->query("SELECT * FROM `member` WHERE `member_id` = '$mname' AND `status` <> '99'");
-        $row = $query_chk->getRowArray();
-        if ($row) {
-            if ($row) {
-                $response['status'] = 1;
-                $response['msg'] = 'กำลังค้นหาข้อมูล';
-                $response['rowdata'] = $row; 
-            } else {
-                $response['status'] = 0;
-                $response['msg'] = 'ไม่พบข้อมูล';
-            }
-        } else {
+      
+        if($search_val == '1'){
+            $query_chk = $db->query("SELECT * FROM `member` WHERE `member_id` LIKE '%$mname%'  AND `status` <> '99'");
+            $row = $query_chk->getResult('array');
+                if ($row) {
+                    $response['status'] = 1;
+                    $response['msg'] = 'กำลังค้นหาข้อมูล';
+                   // $response['rowdata'] = $row; 
+                } else {
+                    $response['status'] = 0;
+                    $response['msg'] = 'ไม่พบข้อมูล';
+                }
+        }else if($search_val == '2'){
+            $query_chk = $db->query("SELECT * FROM `member` WHERE `name` LIKE '%$mname%'  AND `status` <> '99'");
+            $row = $query_chk->getResult('array');
+                if ($row) {
+                    $response['status'] = 1;
+                    $response['msg'] = 'กำลังค้นหาข้อมูล';
+                  //  $response['rowdata'] = $row; 
+                } else {
+                    $response['status'] = 0;
+                    $response['msg'] = 'ไม่พบข้อมูล';
+                }
+        }else if($search_val == '3'){
+            $query_chk = $db->query("SELECT * FROM `member` WHERE `telephone` LIKE '%$mname%'  AND `status` <> '99'");
+            $row = $query_chk->getResult('array');
+                if ($row) {
+                    $response['status'] = 1;
+                    $response['msg'] = 'กำลังค้นหาข้อมูล';
+                  //  $response['rowdata'] = $row; 
+                } else {
+                    $response['status'] = 0;
+                    $response['msg'] = 'ไม่พบข้อมูล';
+                }
+        }else if($search_val == '4'){
+            $query_chk = $db->query("SELECT * FROM `member` WHERE `email` LIKE '%$mname%'  AND `status` <> '99'");
+            $row = $query_chk->getResult('array');
+                if ($row) {
+                    $response['status'] = 1;
+                    $response['msg'] = 'กำลังค้นหาข้อมูล';
+                  //  $response['rowdata'] = $row; 
+                } else {
+                    $response['status'] = 0;
+                    $response['msg'] = 'ไม่พบข้อมูล';
+                }
+        }else if($search_val == '5'){
+            $query_chk = $db->query("SELECT * FROM `member` WHERE  `status` <> '99'");
+            $row = $query_chk->getResult('array');
+                if ($row) {
+                    $response['status'] = 1;
+                    $response['msg'] = 'กำลังค้นหาข้อมูล';
+                      //  $response['rowdata'] = $row; 
+                } else {
+                    $response['status'] = 0;
+                    $response['msg'] = 'ไม่พบข้อมูล';
+                }
+        }else if($search_val == '99'){
             $response['status'] = 0;
-            $response['msg'] = 'ไม่มีรหัสนี้';
-        }
+            $response['msg'] = 'ยังไม่ได้เลือกประเภทค้นหา';
+    }
+
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 

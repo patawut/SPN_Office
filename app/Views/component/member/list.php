@@ -2,8 +2,20 @@
 $return=array();
 $fc = new \App\Helpers\fcPosition($db);
 $id = isset($_POST['id']) ? $_POST['id'] : '';
-
-$query = $db->query("SELECT * FROM `member` WHERE `member_id` LIKE '%$id%' AND `status` <> '99' ORDER BY `member_id` DESC ");
+$search_val = isset($_POST['search_val']) ? $_POST['search_val'] : '';
+if($search_val == '1'){
+    $query = $db->query("SELECT * FROM `member` WHERE `member_id` LIKE '%$id%' AND `status` <> '99' ORDER BY `member_id` DESC ");
+}else if($search_val == '2'){
+    $query = $db->query("SELECT * FROM `member` WHERE `name` LIKE '%$id%' AND `status` <> '99' ORDER BY `member_id` DESC ");
+}else if($search_val == '3'){
+    $query = $db->query("SELECT * FROM `member` WHERE `telephone` LIKE '%$id%' AND `status` <> '99' ORDER BY `member_id` DESC ");
+}else if($search_val == '4'){
+    $query = $db->query("SELECT * FROM `member` WHERE `email` LIKE '%$id%' AND `status` <> '99' ORDER BY `member_id` DESC ");
+}else if($search_val == '5'){
+    $query = $db->query("SELECT * FROM `member` WHERE  `status` <> '99' ORDER BY `member_id` DESC ");
+}else{
+    $query = $db->query("SELECT * FROM `member` WHERE  `status` <> '99' ORDER BY `member_id` DESC ");
+}
 ?>
 
 <div class="card border-top border-0 border-4 border-info">
@@ -17,7 +29,7 @@ $query = $db->query("SELECT * FROM `member` WHERE `member_id` LIKE '%$id%' AND `
                     <button type="button" class="btn btn-primary align-items-center" id="add">
                         <i class="fadeIn animated bx bx-user-plus"></i>
                         &nbsp;
-                        เพิ่มข้อมูลสมาชิก
+                        เพิ่มข้อมูลสมาชิก 
                     </button>
                 </div>
             </div>
@@ -34,6 +46,7 @@ $query = $db->query("SELECT * FROM `member` WHERE `member_id` LIKE '%$id%' AND `
                         <th class="text-nowrap">ชื่อ - นามสกุล</th>
                         <th class="text-center">ระดับสมาชิก</th>
                         <th class="text-center">เบอร์โทรศัพท์</th>
+                        <th class="text-center">E-mail</th>
                         <th class="text-center">สถานะ</th>
                         <th class="text-center"><i class="fas fa-cog"></i></th>
                     </tr>
@@ -54,6 +67,7 @@ $query = $db->query("SELECT * FROM `member` WHERE `member_id` LIKE '%$id%' AND `
                         <td class="text-nowarp align-middle"><?=esc($row['name'])?></td>
                         <td class="text-nowarp align-middle"><?=esc($mPosition['position_name'])?></td>
                         <td class="text-nowarp align-middle"><?=esc($row['telephone'])?></td>
+                        <td class="text-nowarp align-middle"><?=esc($row['email'])?></td>
                         <td class="text-nowrap">
                             <select class="form-select <?=$row['status'] =="1"?"bg-success":"bg-danger"?> text-white"
                                 id="status" name="status" TypeID="<?=esc($row['member_id'])?>">

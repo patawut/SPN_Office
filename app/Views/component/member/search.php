@@ -18,62 +18,125 @@
 <hr />
 <div class="card border-top border-0 border-4 border-primary">
     <div class="card-body">
-        <form class="row" id="formSearch" method="post" enctype="multipart/form-data" name="formSearch">
+        <form class="row" id="formSearch" method="post" enctype="multipart/form-data" name="formSearch
+        ">
             <div class="input-group">
-                <input type="hidden" class="form-control" id="even"  name="even" value="<?=$even?>">
-                <input type="text" id="mname" name="mname" class="form-control" placeholder="ค้นหาข้อมูลสมาชิก"
-                    aria-label="ค้นหาข้อมูลสมาชิก" aria-describedby="btn_search">
-                <button class="btn btn-outline-primary" type="submit" id="btn_search" ><i class="fadeIn animated bx bx-search-alt"></i></button>
+                <input type="hidden" class="form-control" id="even" name="even" value="<?=$even?>">
+                
             </div>
+            <div class="input-group mb-3">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false" id="searchType" sID="99" >ประเภทค้นหา</button>
+                <ul class="dropdown-menu" style="">
+                    <li><a class="dropdown-item" href="#" sID="1">รหัสสมาชิก</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#" sID="2">ชื่อสมาชิก</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#" sID="3">เบอร์โทรศัพท์</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#" sID="4">E-mail</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#" sID="5">แสดงข้อมูลทั้งหมด</a>
+                    </li>
+                </ul>
+                <input type="text" class="form-control" id="mname" name="mname" placeholder="ค้นหาข้อมูลสมาชิก"
+                    aria-label="ค้นหาข้อมูลสมาชิก" aria-describedby="btn_search">
+                <button class="btn btn-outline-primary" type="submit" id="btn_search"><i
+                        class="fadeIn animated bx bx-search-alt"></i></button>
+            </div>
+            <input type="hidden" class="form-control" id="search_val" name="search_val" value="99">
         </form>
     </div>
 </div>
 <script>
-$('form#formSearch').submit(function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
-    //console.log('p1');
-    let id = formData.get('mname');
-    $.ajax({
-        url: './component/member/process',
-        type: 'POST',
-        data: formData,
-        success: function(data) {
-            if (data.status == 1) {
-                Swal.fire({
+$(document).ready(function() {
+    $('.dropdown-item').click(function(e) {
+        e.preventDefault();
+
+        var selectedText = $(this).text();
+        var selectedValue = $(this).attr('sID');
+                
+        $('#searchType').text(selectedText);
+        if(selectedValue == '5'){
+            $('#mname').attr('placeholder', selectedText);
+        }else{
+            $('#mname').attr('placeholder', 'ค้นหา' + selectedText);
+        }
+        $('#search_val').val(selectedValue);
+
+    });
+
+    $('form#formSearch').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        //console.log('p1');
+        let id = formData.get('mname');
+        let search_val = formData.get('search_val');
+        $.ajax({
+            url: './component/member/process',
+            type: 'POST',
+            data: formData,
+            success: function(data) {
+                if (data.status == 1) {
+                    Swal.fire({
                         icon: 'success',
                         title: data.msg,
                         showConfirmButton: false,
                         timer: 1500
                     }).then(function() {
-                        $.post("./component/member/list", { id : id }, function(data) {
-                    $('#showlist').html(data);
-                    }, "html");  
+                        console.log(id);
+                        console.log(search_val);
+                        $.post("./component/member/list", {
+                            id: id,
+                            search_val: search_val
+                        }, function(data) {
+                            $('#showlist').html(data);
+                        }, "html");
                     });
-                
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: data.msg,
-                })
-                $.post("./component/member/search",(data)=> {  $('#showSearch').html(data);},"html");
-                $.post("./component/member/list", { id : id }, function(data) {$('#showlist').html(data);});
-            }
-            
-        },
-        statusCode: {
 
-            404: () => {
-                alert("page not found")
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.msg,
+                    })
+                    $.post("./component/member/search", (data) => {
+                        $('#showSearch').html(data);
+                    }, "html");
+                    $.post("./component/member/list", {
+                        id: id,
+                        search_val: search_val
+                    }, function(data) {
+                        $('#showlist').html(data);
+                    });
+                }
+
             },
-            500: () => {
-                alert("เกินข้อผิดพลาดภายในระบบ")
-            }
-        },
-        dataType: 'json',
-        cache: false,
-        contentType: false,
-        processData: false
+            statusCode: {
+
+                404: () => {
+                    alert("page not found")
+                },
+                500: () => {
+                    alert("เกินข้อผิดพลาดภายในระบบ")
+                }
+            },
+            dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false
+        });
     });
 });
 </script>
