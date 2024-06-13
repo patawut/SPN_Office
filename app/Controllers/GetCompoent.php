@@ -7,11 +7,13 @@ class GetCompoent extends ResourceController
 { 
     protected $security;
     protected $return;
+
     function __construct(){ 
         $this->return=array(); 
     }
     public function component($c='index') {
-        if(!$this->session->get('username')){
+        $session = session();
+        if(!$session->get('username')){
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         if(!is_file(APPPATH.'/Views/page/'.$c.'.php')){
@@ -23,9 +25,10 @@ class GetCompoent extends ResourceController
     }
 
     public function subComponent($s='admin',$c='main') {
-        // if(!$this->session->get('username')){
-        //     throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-        // }
+        $session = session();
+        if(!$session->get('username')){
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
 
         if(!is_file(APPPATH.'/Views/component/'.$s.'/'.$c.'.php')){
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
