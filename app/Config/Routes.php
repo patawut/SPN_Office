@@ -48,6 +48,7 @@ $routes->get('/bankaccount', 'Home::bankaccount');
 $routes->get('/article', 'Home::article');
 $routes->get('/news', 'Home::news');
 $routes->get('/product', 'Home::product');
+$routes->get('/profile', 'Home::profile');
 
 $routes->get('/memberposition', 'Home::memberposition');
 $routes->get('/member', 'Home::member');
