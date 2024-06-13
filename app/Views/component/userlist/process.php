@@ -17,11 +17,6 @@ $userIP = $_SERVER['REMOTE_ADDR'];
 $user = $session->get('username');
 
 $date = date("Y-m-d H:i:s");
-//  echo "post \n";
-//  print_r($_POST);
-//  echo "SESSION \n";
-//  print_r($_SESSION);
-//  exit;
 
 if(!$session->has('username')){
     $response = [

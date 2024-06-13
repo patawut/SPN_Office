@@ -68,7 +68,7 @@
             </div>
             <div class="col-md-12">
                 <label for="news_detail" class="form-label">รายละเอียด</label>
-                <textarea id="summernote" class="form-control" name="news_detail" rows="3" required><?=$news_detail?></textarea>
+                <textarea id="summernote" class="form-control" name="news_detail" rows="3" ><?=$news_detail?></textarea>
             </div>
             <div class="col-md-12">
                 <div class="form-group">

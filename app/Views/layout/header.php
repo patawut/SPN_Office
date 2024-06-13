@@ -214,7 +214,7 @@ if($user==null || $fullname==null || $typeUser==null){
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li>
-								<a class="dropdown-item" href="<?=site_url('./profile')?>"><i class="bx bx-user"></i><span>Profile</span></a>
+								<a class="dropdown-item openmodal" userIDD="<?=$user?>" href="#"><i class="bx bx-user"></i><span>Profile <?=$fullname?></span></a>
 							</li>  
 							<li>
 								<div class="dropdown-divider mb-0"></div>
@@ -229,5 +229,31 @@ if($user==null || $fullname==null || $typeUser==null){
 		<?php
 			print_r($user);
 		?>
+</div>
+
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content " id="profileModal_content">
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function() {
+   $('.openmodal').click(function(e) {
+        e.preventDefault();
+        let id = $(this).attr('userIDD');
+
+        $.post("./component/profile/forms", {
+            id: id,
+			even: "editProfile"
+        }, (data) => {
+            console.log(id);
+            $('#profileModal').modal('show');
+            $('#profileModal_content').html(data);
+
+        }, "html");
+    });
+});
+</script>
 		<!--end header -->
 		<!--start page wrapper -->

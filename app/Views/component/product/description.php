@@ -102,7 +102,7 @@
                         <option value="99">-- เลือกประเภทสินค้า --</option>
                         <?php
                             foreach($cat2 as $cats2){
-                                if($even == "edit") {$selected = $cats2->type_id==$type_id?"selected":"";} 
+                                if($even == "desc") {$selected = $cats2->type_id==$type_id?"selected":"";} 
                                 echo $cats2->type_id;
                                 echo '<option value="'.$cats2->type_id.'" '.$selected.'>'.$cats2->type_name.'</option>';
                             } 
