@@ -641,7 +641,7 @@ if ($even == "del") {
         'even' => 'del', 
     ];
 
-    $sql = "UPDATE `member` SET `status` = ?  WHERE `member_id` = ?";
+    $sql = "UPDATE `member` SET  `status` = ?  WHERE `member_id` = ?";
     $query = $db->query($sql, [99,$id]);
 
     $sql_bank = "UPDATE `member_bank` SET `status` = ? WHERE `member_id` = ?";
@@ -659,16 +659,38 @@ if ($even == "del") {
 
 
 if ($even == "dela") { 
-    $query = $db->query("UPDATE  `member` SET `status` = 99  WHERE `member_id` = ?", [$id]);
-    $query1 = $db->query("UPDATE  `member_bank` SET `status` = 99  WHERE `member_id` = ?", [$id]);
-    $query2 = $db->query("UPDATE  `member_info` SET `status` = 99  WHERE `member_id` = ?", [$id]);
-    if ($query) {
-        $response['status']=1;
-        $response['msg']='บันทึกข้อมูลสำเร็จ';
-    } else {
-        $response['status']=0;
+
+    $query_chk = $db->query("SELECT * FROM `member` WHERE `member_id` = '$id'  AND  `status` = '1'");
+        $row = $query_chk->getRowArray();
+        $query_chk_info = $db->query("SELECT * FROM `member_info` WHERE `member_id` = '$id'  AND  `status` = '1'");
+        $row_info = $query_chk_info->getRowArray();
+        if ($row){
+            $line_data = $row['line'];
+            $idcard_data =$row_info['idcard'];
+            $email_data = $row['email'];
+            $telephone_data = $row['telephone'];
+
+            $line_d = $line_data . "" . $id;
+            $idcard_d = $idcard_data . "" . $id;
+            $email_d = $email_data . "" . $id;
+            $telephone_d = $telephone_data . "" . $id;
+
+            $query = $db->query("UPDATE  `member` SET `line` = ?  , `email` = ? ,`telephone` = ? ,`status` = 99  WHERE `member_id` = ?", [$line_d,$email_d,$telephone_d,$id]);
+            $query1 = $db->query("UPDATE  `member_bank` SET `status` = 99  WHERE `member_id` = ?", [$id]);
+            $query2 = $db->query("UPDATE  `member_info` SET `idcard` = ? , `status` = 99  WHERE `member_id` = ?", [$idcard_d,$id]);
+            if ($query) {
+                $response['status']=1;
+                $response['msg']='บันทึกข้อมูลสำเร็จ';
+            } else {
+                $response['status']=0;
+                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+            }
+        }else{
+            $response['status']=0;
         $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
-    }
+          
+        }
+   
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 
