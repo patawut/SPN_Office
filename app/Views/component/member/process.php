@@ -71,7 +71,6 @@ if ($even == "search"){
             'even' => 'search', 
             'mname' => $mname,
         ];
-      
         if($search_val == '1'){
             $query_chk = $db->query("SELECT * FROM `member` WHERE `member_id` LIKE '%$mname%'  AND `status` <> '99'");
             $row = $query_chk->getResult('array');
@@ -364,7 +363,7 @@ if($even == "edit"){
                 //echo "ตัวแปร var2 ไม่ว่าง, ตัวแปร var1 และ var3 เป็นค่าว่าง<br>";
             }
         
-            if (!empty($var3) && empty($var1) && empty($var2)) {
+             if (!empty($line) && empty($profile_id) && empty($email)) {
                 $pass = password_hash($password,PASSWORD_DEFAULT);
                 $sql_member = "UPDATE `member` SET `profile_id` = NULL,`password` = ?, `telephone` = ?, `email` = NULL, `line` = ?, `name` = ?, `photo` = ?, `position_id` = ?, `status` = ?  WHERE `member_id` = ?";
                 $query_member = $db->query($sql_member, [ $pass, $telephone, $line,$name,$photourl ,$position_id, $status,$tid]);
@@ -408,32 +407,138 @@ if($even == "editMem"){
         'tid' => $tid,
     ];
      
+    if (empty($profile_id)) {
+        $profile_id = null;
+    }
+    if (empty($email)) {
+        $email = null;
+    }
+    if (empty($line)) {
+        $line = null;
+    }
+
     if($position_id != '99'){
-        if($password == ""){
-            $pass = password_hash($password,PASSWORD_DEFAULT);
-            $sql_member = "UPDATE `member` SET `profile_id` = ? , `telephone` = ?, `email` = ?, `line` = ?, `name` = ?, `photo` = ?, `position_id` = ? WHERE `member_id` = ?";
-            $query_member = $db->query($sql_member, [$profile_id, $telephone, $email, $line,$name,$photourl ,$position_id,$tid]);
-         
-            if ($query_member) {
-                $response['status']=1;
-                $response['msg']='บันทึกข้อมูลสำเร็จ';
-            } else {
-                $response['status']=0;
-                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+        if (empty($profile_id) && empty($email) && empty($line)) {
+                $pass = password_hash($password,PASSWORD_DEFAULT);
+                $sql_member = "UPDATE `member` SET `profile_id` = NULL ,`password` = ?, `telephone` = ?, `email` = NULL, `line` = NULL, `name` = ?, `photo` = ?, `position_id` = ?  WHERE `member_id` = ?";
+                $query_member = $db->query($sql_member, [$pass, $telephone,$name,$photourl ,$position_id,$tid]);
+            
+                if ($query_member) {
+                    $response['status']=1;
+                    $response['msg']='บันทึกข้อมูลสำเร็จ';
+                } else {
+                    $response['status']=0;
+                    $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+                }
+                //echo "ตัวแปรทั้งสามตัวเป็นค่าว่าง<br>";
+        } else {
+            // ตรวจสอบกรณีต่าง ๆ
+            if (empty($profile_id) && !empty($email) && !empty($line)) {
+                $pass = password_hash($password,PASSWORD_DEFAULT);
+                $sql_member = "UPDATE `member` SET `profile_id` = NULL ,`password` = ?, `telephone` = ?, `email` = ?, `line` = ?, `name` = ?, `photo` = ?, `position_id` = ?  WHERE `member_id` = ?";
+                $query_member = $db->query($sql_member, [$pass, $telephone, $email, $line,$name,$photourl ,$position_id,$tid]);
+            
+                if ($query_member) {
+                    $response['status']=1;
+                    $response['msg']='บันทึกข้อมูลสำเร็จ';
+                } else {
+                    $response['status']=0;
+                    $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+                }
+                //echo "ตัวแปร var1 เป็นค่าว่าง, ตัวแปร var2 และ var3 ไม่ว่าง<br>";
             }
-        }else{
-            $pass = password_hash($password,PASSWORD_DEFAULT);
-            $sql_member = "UPDATE `member` SET `profile_id` = ?,`password` = ?, `telephone` = ?, `email` = ?, `line` = ?, `name` = ?, `photo` = ?, `position_id` = ? WHERE `member_id` = ?";
-            $query_member = $db->query($sql_member, [$profile_id, $pass, $telephone, $email, $line,$name,$photourl ,$position_id,$tid]);
-         
-            if ($query_member) {
-                $response['status']=1;
-                $response['msg']='บันทึกข้อมูลสำเร็จ';
-            } else {
-                $response['status']=0;
-                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+        
+            if (empty($email) && !empty($profile_id) && !empty($line)) {
+                $pass = password_hash($password,PASSWORD_DEFAULT);
+                $sql_member = "UPDATE `member` SET `profile_id` = ?,`password` = ?, `telephone` = NULL, `email` = ?, `line` = ?, `name` = ?, `photo` = ?, `position_id` = ?  WHERE `member_id` = ?";
+                $query_member = $db->query($sql_member, [$profile_id, $pass, $telephone, $line,$name,$photourl ,$position_id,$tid]);
+            
+                if ($query_member) {
+                    $response['status']=1;
+                    $response['msg']='บันทึกข้อมูลสำเร็จ';
+                } else {
+                    $response['status']=0;
+                    $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+                }
+                //echo "ตัวแปร var2 เป็นค่าว่าง, ตัวแปร var1 และ var3 ไม่ว่าง<br>";
+            }
+        
+            if (empty($line) && !empty($profile_id) && !empty($email)) {
+                $pass = password_hash($password,PASSWORD_DEFAULT);
+                $sql_member = "UPDATE `member` SET `profile_id` = ?,`password` = ?, `telephone` = ?, `email` = ?, `line` = NULL, `name` = ?, `photo` = ?, `position_id` = ?  WHERE `member_id` = ?";
+                $query_member = $db->query($sql_member, [$profile_id, $pass, $telephone, $email,$name,$photourl ,$position_id,$tid]);
+            
+                if ($query_member) {
+                    $response['status']=1;
+                    $response['msg']='บันทึกข้อมูลสำเร็จ';
+                } else {
+                    $response['status']=0;
+                    $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+                }
+                //echo "ตัวแปร var3 เป็นค่าว่าง, ตัวแปร var1 และ var2 ไม่ว่าง<br>";
+            }
+        
+            if (!empty($profile_id) && empty($email) && empty($line)) {
+                $pass = password_hash($password,PASSWORD_DEFAULT);
+                $sql_member = "UPDATE `member` SET `profile_id` = ?,`password` = ?, `telephone` = ?, `email` = NULL , `line` = NULL, `name` = ?, `photo` = ?, `position_id` = ?  WHERE `member_id` = ?";
+                $query_member = $db->query($sql_member, [$profile_id, $pass, $telephone,$name,$photourl ,$position_id,$tid]);
+            
+                if ($query_member) {
+                    $response['status']=1;
+                    $response['msg']='บันทึกข้อมูลสำเร็จ';
+                } else {
+                    $response['status']=0;
+                    $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+                }
+                //echo "ตัวแปร var1 ไม่ว่าง, ตัวแปร var2 และ var3 เป็นค่าว่าง<br>";
+            }
+        
+            if (!empty($email) && empty($profile_id) && empty($line)) {
+                $pass = password_hash($password,PASSWORD_DEFAULT);
+                $sql_member = "UPDATE `member` SET `profile_id` = NULL ?,`password` = ?, `telephone` = ?, `email` = ?, `line` = NULL, `name` = ?, `photo` = ?, `position_id` = ?  WHERE `member_id` = ?";
+                $query_member = $db->query($sql_member, [ $pass, $telephone, $email, $name,$photourl ,$position_id,$tid]);
+            
+                if ($query_member) {
+                    $response['status']=1;
+                    $response['msg']='บันทึกข้อมูลสำเร็จ';
+                } else {
+                    $response['status']=0;
+                    $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+                }
+                //echo "ตัวแปร var2 ไม่ว่าง, ตัวแปร var1 และ var3 เป็นค่าว่าง<br>";
+            }
+        
+            if (!empty($line) && empty($profile_id) && empty($email)) {
+                $pass = password_hash($password,PASSWORD_DEFAULT);
+                $sql_member = "UPDATE `member` SET `profile_id` = NULL,`password` = ?, `telephone` = ?, `email` = NULL, `line` = ?, `name` = ?, `photo` = ?, `position_id` = ?  WHERE `member_id` = ?";
+                $query_member = $db->query($sql_member, [ $pass, $telephone, $line,$name,$photourl ,$position_id,$tid]);
+            
+                if ($query_member) {
+                    $response['status']=1;
+                    $response['msg']='บันทึกข้อมูลสำเร็จ';
+                } else {
+                    $response['status']=0;
+                    $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+                }
+               //// echo "ตัวแปร var3 ไม่ว่าง, ตัวแปร var1 และ var2 เป็นค่าว่าง<br>";
+            }
+        
+            // ตรวจสอบกรณีที่ตัวแปรทั้งสามตัวไม่ว่าง
+            if (!empty($profile_id) && !empty($email) && !empty($line)) {
+                $pass = password_hash($password,PASSWORD_DEFAULT);
+                $sql_member = "UPDATE `member` SET `profile_id` = ?,`password` = ?, `telephone` = ?, `email` = ?, `line` = ?, `name` = ?, `photo` = ?, `position_id` = ? WHERE `member_id` = ?";
+                $query_member = $db->query($sql_member, [$profile_id, $pass, $telephone, $email, $line,$name,$photourl ,$position_id,$tid]);
+            
+                if ($query_member) {
+                    $response['status']=1;
+                    $response['msg']='บันทึกข้อมูลสำเร็จ';
+                } else {
+                    $response['status']=0;
+                    $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
+                }
             }
         }
+        
     }else{
         $response['status'] = 0;
         $response['msg'] = 'กรุณาเลือกระดับสมาชิก';
@@ -541,7 +646,7 @@ if($even == "checkmail"){
             }
         }else{
             $response['status'] = 1;
-            $response['msg'] = '';
+            $response['msg'] = 'สามารถใช้อีเมล์นี้ได้';
         }
        
        // echo json_encode($row, JSON_UNESCAPED_UNICODE);
@@ -566,7 +671,7 @@ if($even == "checkline"){
         }
     }else{
         $response['status'] = 1;
-        $response['msg'] = '';
+        $response['msg'] = 'สามารถใช้ Line นี้ได้';
     }
        // echo json_encode($row, JSON_UNESCAPED_UNICODE);
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
@@ -591,7 +696,7 @@ if($even == "checkprofile"){
             }
         }else{
             $response['status'] = 1;
-            $response['msg'] = '';
+            $response['msg'] = 'สามารถใช้ id นี้ได้';
         }
        // echo json_encode($row, JSON_UNESCAPED_UNICODE);
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
