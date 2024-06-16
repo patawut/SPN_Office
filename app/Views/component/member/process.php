@@ -765,37 +765,96 @@ if ($even == "del") {
 
 if ($even == "dela") { 
 
-    $query_chk = $db->query("SELECT * FROM `member` WHERE `member_id` = '$id'  AND  `status` = '1'");
+        $query_chk = $db->query("SELECT * FROM `member` WHERE `member_id` = '$id'  AND  `status` = '1'");
         $row = $query_chk->getRowArray();
         $query_chk_info = $db->query("SELECT * FROM `member_info` WHERE `member_id` = '$id'  AND  `status` = '1'");
         $row_info = $query_chk_info->getRowArray();
-        if ($row){
-            $line_data = $row['line'];
-            $idcard_data =$row_info['idcard'];
-            $email_data = $row['email'];
-            $telephone_data = $row['telephone'];
+        $query_chk_bank = $db->query("SELECT * FROM `member_bank` WHERE `member_id` = '$id'  AND  `status` = '1'");
+        $row_bank = $query_chk_bank->getRowArray();
+        
+         if ($row) {
+        //     $a_data = $row_a['data'];
+        
+             if ($row_info && $row_bank) {
+                $line_data = $row['line'];
+                $email_data = $row['email'];
+                $telephone_data = $row['telephone'];
 
-            $line_d = $line_data . "" . $id;
-            $idcard_d = $idcard_data . "" . $id;
-            $email_d = $email_data . "" . $id;
-            $telephone_d = $telephone_data . "" . $id;
+                $idcard_data =$row_info['idcard'];
+
+                $numbank_data =$row_bank['numbank'];
+
+                $line_d = $line_data . "" . $id;
+                $email_d = $email_data . "" . $id;
+                $telephone_d = $telephone_data . "" . $id;
+
+                $idcard_d = $idcard_data . "" . $id;
+
+                $numbank_d = $numbank_data . "" . $id;
 
             $query = $db->query("UPDATE  `member` SET `line` = ?  , `email` = ? ,`telephone` = ? ,`status` = 99  WHERE `member_id` = ?", [$line_d,$email_d,$telephone_d,$id]);
-            $query1 = $db->query("UPDATE  `member_bank` SET `status` = 99  WHERE `member_id` = ?", [$id]);
+            $query1 = $db->query("UPDATE  `member_bank` SET `numbank` = ? ,`status` = 99  WHERE `member_id` = ?", [$numbank_d,$id]);
             $query2 = $db->query("UPDATE  `member_info` SET `idcard` = ? , `status` = 99  WHERE `member_id` = ?", [$idcard_d,$id]);
-            if ($query) {
-                $response['status']=1;
-                $response['msg']='บันทึกข้อมูลสำเร็จ';
+        
+             } elseif ($row_info) {
+
+                $line_data = $row['line'];
+                $email_data = $row['email'];
+                $telephone_data = $row['telephone'];
+
+                $idcard_data =$row_info['idcard'];
+
+                $numbank_data = '';
+
+                $line_d = $line_data . "" . $id;
+                $email_d = $email_data . "" . $id;
+                $telephone_d = $telephone_data . "" . $id;
+
+                $idcard_d = $idcard_data . "" . $id;
+
+                $numbank_d = '';
+
+            $query = $db->query("UPDATE  `member` SET `line` = ?  , `email` = ? ,`telephone` = ? ,`status` = 99  WHERE `member_id` = ?", [$line_d,$email_d,$telephone_d,$id]);
+            $query1 = $db->query("UPDATE  `member_bank` SET `numbank` = ? ,`status` = 99  WHERE `member_id` = ?", [$numbank_d,$id]);
+            $query2 = $db->query("UPDATE  `member_info` SET `idcard` = ? , `status` = 99  WHERE `member_id` = ?", [$idcard_d,$id]);
+            } elseif ($row_bank) {
+
+                $line_data = $row['line'];
+                $email_data = $row['email'];
+                $telephone_data = $row['telephone'];
+
+                $idcard_data ='';
+
+                $numbank_data =$row_bank['numbank'];
+
+                $line_d = $line_data . "" . $id;
+                $email_d = $email_data . "" . $id;
+                $telephone_d = $telephone_data . "" . $id;
+
+                $idcard_d = '';
+
+                $numbank_d = $numbank_data . "" . $id;
+
+            $query = $db->query("UPDATE  `member` SET `line` = ?  , `email` = ? ,`telephone` = ? ,`status` = 99  WHERE `member_id` = ?", [$line_d,$email_d,$telephone_d,$id]);
+            $query1 = $db->query("UPDATE  `member_bank` SET `numbank` = ? ,`status` = 99  WHERE `member_id` = ?", [$numbank_d,$id]);
+            $query2 = $db->query("UPDATE  `member_info` SET `idcard` = ? , `status` = 99  WHERE `member_id` = ?", [$idcard_d,$id]);
             } else {
-                $response['status']=0;
-                $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
-            }
-        }else{
-            $response['status']=0;
-        $response['msg']='บันทึกข้อมูลไม่สำเร็จ';
-          
+               $response['status'] = 0;
+                $response['msg'] = 'บันทึกข้อมูลไม่สำเร็จ';
+             }
+        
+            if ($query) {
+                $response['status'] = 1;
+                 $response['msg'] = 'บันทึกข้อมูลสำเร็จ';
+            } else {
+                $response['status'] = 0;
+                $response['msg'] = 'บันทึกข้อมูลไม่สำเร็จ';
+           }
+        
+        } else {
+            $response['status'] = 0;
+            $response['msg'] = 'บันทึกข้อมูลไม่สำเร็จ';
         }
-   
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 

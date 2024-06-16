@@ -73,7 +73,7 @@
                             <div class="input-group"> <span class="input-group-text bg-transparent"><i
                                         class='fadeIn animated bx bx-credit-card-front'></i></span>
                                 <input type="text" class="form-control border-start-0" id="account_name"
-                                    name="account_name" value="<?=$account_name?>" required />
+                                    name="account_name" value="<?=$account_name?>"  />
                             </div>
                         </div>
                         <div class="col-12 mb-2">
@@ -81,7 +81,7 @@
                             <div class="input-group"> <span class="input-group-text bg-transparent"><i
                                         class='fadeIn animated bx bx-credit-card-front'></i></span>
                                 <input type="text" class="form-control border-start-0" id="numbank" name="numbank"
-                                    value="<?=$numbank?>" required />
+                                    value="<?=$numbank?>"  />
                             </div>
                         </div>
                         <div class="col-md-12 mb-2">
