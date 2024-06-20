@@ -28,27 +28,27 @@
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false" id="searchType" sID="99" >ประเภทค้นหา</button>
                 <ul class="dropdown-menu" style="">
-                    <li><a class="dropdown-item" href="#" sID="1">รหัสสมาชิก</a>
+                    <li><a class="dropdown-item search_dropdown" href="#" sID="1">รหัสสมาชิก</a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#" sID="2">ชื่อสมาชิก</a>
+                    <li><a class="dropdown-item search_dropdown" href="#" sID="2">ชื่อสมาชิก</a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#" sID="3">เบอร์โทรศัพท์</a>
+                    <li><a class="dropdown-item search_dropdown" href="#" sID="3">เบอร์โทรศัพท์</a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#" sID="4">E-mail</a>
+                    <li><a class="dropdown-item search_dropdown" href="#" sID="4">E-mail</a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#" sID="5">แสดงข้อมูลทั้งหมด</a>
+                    <li><a class="dropdown-item search_dropdown" href="#" sID="5">แสดงข้อมูลทั้งหมด</a>
                     </li>
                 </ul>
                 <input type="text" class="form-control" id="mname" name="mname" placeholder="ค้นหาข้อมูลสมาชิก"
@@ -62,7 +62,7 @@
 </div>
 <script>
 $(document).ready(function() {
-    $('.dropdown-item').click(function(e) {
+    $('.search_dropdown').click(function(e) {
         e.preventDefault();
 
         var selectedText = $(this).text();
